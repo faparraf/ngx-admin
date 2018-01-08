@@ -7,9 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent {
-  objeto: any;
+  formulario: any;
 
   constructor() {
-    this.objeto = {};
+    this.formulario = [
+      { label: 'Label1',
+        tipo: 'string',
+        valor: 'Hola a todos',
+      }, {
+        label: 'Label2',
+        tipo: 'string',
+        valor: 'Fabio es gay',
+      }, {
+        label: 'Label3',
+        tipo: 'fecha',
+        valor: '2018-01-05',
+      }, {
+        label: 'Label4',
+        tipo: 'bool',
+        valor: false,
+      },
+    ];
   }
 }
