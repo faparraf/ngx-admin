@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header>
+    Smart Table
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [(settings)]="settings" [(source)]="datos" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <nb-card>
+            <nb-card-header>
+              Vista Previa
+            </nb-card-header>
+            <nb-card-body>
+              <form class="form-horizontal">
+                <div class="form-group row" *ngFor="let campo of datos" [ngSwitch]="campo.tipo">
+                    <label for="{{campo.nombre}}" class="col-sm-3 form-control-label">{{campo.label}}</label>
+                    <div class="col-sm-9">
+                      <input type="range" *ngSwitchCase="'range'" id="{{campo.nombre}}" class="form-control" placeholder="{{campo.placeholder}}">
+                      <input type="text" *ngSwitchCase="'text'" id="{{campo.nombre}}" class="form-control" placeholder="{{campo.placeholder}}">
+                      <input type="date" *ngSwitchCase="'date'" id="{{campo.nombre}}" class="form-control" placeholder="{{campo.placeholder}}">
+                      <input type="number" *ngSwitchCase="'number'" id="{{campo.nombre}}" class="form-control" placeholder="{{campo.placeholder}}">
+                      <input type="email" *ngSwitchCase="'email'" id="{{campo.nombre}}" class="form-control" placeholder="{{campo.placeholder}}">
+                      <textarea type="text" *ngSwitchCase="'area'" id="{{campo.nombre}}" class="form-control"></textarea>
+                      <nb-checkbox *ngSwitchCase="'check'" id="{{campo.nombre}}"></nb-checkbox>
+                    </div>
+                </div>
+              </form>
+            </nb-card-body>
+          </nb-card>
+    </div>
+</div>
+
+
+

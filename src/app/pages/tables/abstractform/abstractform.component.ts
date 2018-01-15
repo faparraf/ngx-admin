@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-
+import { Component, OnInit } from '@angular/core';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { LocalDataSource } from 'ng2-smart-table/lib/data-source/local/local.data-source';
+
 
 @Component({
-  selector: 'ngx-smart-table',
-  templateUrl: './smart-table.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  selector: 'app-abstractform',
+  templateUrl: './abstractform.component.html',
+  styleUrls: ['./abstractform.component.scss']
 })
-export class SmartTableComponent {
+export class AbstractformComponent{
 
+  datos = []
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -24,65 +21,62 @@ export class SmartTableComponent {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmEdit: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      firstName: {
-        title: 'First Name',
+      nombre: {
+        title: 'Nombre',
         type: 'string',
       },
-      lastName: {
-        title: 'Last Name',
+      label: {
+        title: 'Label',
         type: 'string',
       },
-      username: {
-        title: 'Username',
+      placeholder: {
+        title: 'Placeholder',
         type: 'string',
       },
-      email: {
-        title: 'E-mail',
+      requerido:{
+        title: 'Requerido',
         type: 'string',
       },
-      age: {
-        title: 'Age',
-        type: 'number',
-      },
-      other: {
-        title: 'User Name',
+      tipo: {
+        title: 'Tipo',
         type: 'html',
         editor: {
           type: 'list',
           config: {
-            list: [{ value: 'Antonette', title: 'Antonette' }, { value: 'Bret', title: 'Bret' }, {
-              value: '<b>Samantha</b>',
-              title: 'Samantha',
-            }],
+            list: [
+              { value: 'text', title: 'Texto' },
+              { value: 'area', title: 'Texto Largo' },
+              { value: 'date', title: 'Fecha' },
+              { value: 'check', title: 'Check' },
+              { value: 'email', title: 'Email' },
+              { value: 'range', title: 'Rango' },
+              { value: 'number', title: 'Número' },
+            ],
           },
         },
       },
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
 
   constructor(private service: SmartTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
-    console.log(data);
   }
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
+      var pos = this.datos.indexOf(event.data);
+      this.datos.splice(pos, 1);
     } else {
       event.confirm.reject();
     }
   }
+
 }
