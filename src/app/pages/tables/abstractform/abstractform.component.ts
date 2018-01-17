@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SmartTableService } from '../../../@core/data/smart-table.service';
-import { LocalDataSource } from 'ng2-smart-table/lib/data-source/local/local.data-source';
+import { Component} from '@angular/core';
 
 
 @Component({
-  selector: 'app-abstractform',
+  selector: 'ngx-app-abstractform',
   templateUrl: './abstractform.component.html',
-  styleUrls: ['./abstractform.component.scss']
+  styleUrls: ['./abstractform.component.scss'],
 })
-export class AbstractformComponent{
+export class AbstractformComponent {
 
-  datos = []
+  datos = [];
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -66,13 +64,13 @@ export class AbstractformComponent{
   };
 
 
-  constructor(private service: SmartTableService) {
+  constructor() {
   }
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
-      var pos = this.datos.indexOf(event.data);
+      const pos = this.datos.indexOf(event.data);
       this.datos.splice(pos, 1);
     } else {
       event.confirm.reject();

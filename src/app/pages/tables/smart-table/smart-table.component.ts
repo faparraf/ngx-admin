@@ -75,7 +75,6 @@ export class SmartTableComponent {
   constructor(private service: SmartTableService) {
     const data = this.service.getData();
     this.source.load(data);
-    console.log(data);
   }
 
   onDeleteConfirm(event): void {
