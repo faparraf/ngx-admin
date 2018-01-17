@@ -1,6 +1,7 @@
-sudo: false
-
 language: node_js
+
+sudo: false
+dist: trusty
 
 node_js:
   - '8'
@@ -12,11 +13,13 @@ cache:
 before_install: if [[ `npm -v` != 5* ]]; then npm i -g npm@5; fi
 
 install:
-  - npm i
+  - travis_retry npm i
+
+before_script:
 
 script:
   - npm run lint:ci
-  - npm run build:ci
+  - npm run build:prod
 
 git:
   depth: 1

@@ -1,4 +1,4 @@
-@import '../../@theme/styles/themes';
+@import '../../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
 
@@ -105,7 +105,8 @@
   }
 
   .form-group label {
-    padding: 0 0 0.75rem;
+    padding-right: 1rem;
+    text-align: right;
   }
 
   ngb-rating {

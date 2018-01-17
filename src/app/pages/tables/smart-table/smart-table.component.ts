@@ -54,6 +54,19 @@ export class SmartTableComponent {
         title: 'Age',
         type: 'number',
       },
+      other: {
+        title: 'User Name',
+        type: 'html',
+        editor: {
+          type: 'list',
+          config: {
+            list: [{ value: 'Antonette', title: 'Antonette' }, { value: 'Bret', title: 'Bret' }, {
+              value: '<b>Samantha</b>',
+              title: 'Samantha',
+            }],
+          },
+        },
+      },
     },
   };
 
