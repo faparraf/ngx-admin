@@ -5,6 +5,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { TablesRoutingModule, routedComponents } from './tables-routing.module';
 import { SmartTableService } from '../../@core/data/smart-table.service';
 import { AbstractformComponent } from './abstractform/abstractform.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AbstractformComponent } from './abstractform/abstractform.component';
   declarations: [
     ...routedComponents,
     AbstractformComponent,
+    OrganizationComponent,
   ],
   providers: [
     SmartTableService,
