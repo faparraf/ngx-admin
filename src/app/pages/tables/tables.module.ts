@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-
 import { ThemeModule } from '../../@theme/theme.module';
 import { TablesRoutingModule, routedComponents } from './tables-routing.module';
-import { SmartTableService } from '../../@core/data/smart-table.service';
+import { ClustService } from '../../@core/data/clust.service';
 import { AbstractformComponent } from './abstractform/abstractform.component';
 import { OrganizationComponent } from './organization/organization.component';
 
@@ -19,7 +18,7 @@ import { OrganizationComponent } from './organization/organization.component';
     OrganizationComponent,
   ],
   providers: [
-    SmartTableService,
+    ClustService,
   ],
 })
 export class TablesModule { }

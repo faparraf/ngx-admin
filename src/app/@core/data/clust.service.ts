@@ -12,8 +12,8 @@ export class ClustService {
 
     constructor(private http:HttpClient) {
     }
-    get() {
-        return this.http.get('/api/food');
+    get(endpoint) {
+        return this.http.get(path + endpoint);
     }
     post(endpoint, element) {
         const body = JSON.stringify(element);

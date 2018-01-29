@@ -12,12 +12,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-gear',
     children: [
       {
-        title: 'Smart Table',
-        link: '/pages/tables/smart-table',
+        title: 'Crear Formularios',
+        link: '/pages/tables/abstractform',
       },
       {
-        title: 'Abstract Form',
-        link: '/pages/tables/abstractform',
+        title: 'Organización',
+        link: '/pages/tables/organization',
       },
     ],
   },

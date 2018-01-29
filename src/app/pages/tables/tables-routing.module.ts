@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TablesComponent } from './tables.component';
 import { SmartTableComponent } from './smart-table/smart-table.component';
 import { AbstractformComponent } from './abstractform/abstractform.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,9 @@ const routes: Routes = [{
   }, {
     path: 'abstractform',
     component: AbstractformComponent,
+  }, {
+    path: 'organization',
+    component: OrganizationComponent,
   }],
 }];
 
