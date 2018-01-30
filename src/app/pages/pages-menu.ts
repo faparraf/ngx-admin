@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Plantilla de Activos',
-        link: '/pages/configuracion/activos',
+        link: '/pages/configuracion/abstract-form',
       },
       {
         title: 'Procesos',

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { ComponentsComponent } from './components.component';
 import { TreeComponent } from './tree/tree.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -8,8 +7,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 const routes: Routes = [{
   path: '',
   component: ComponentsComponent,
-  children: [
-  {
+  children: [{
     path: 'tree',
     component: TreeComponent,
   }, {
