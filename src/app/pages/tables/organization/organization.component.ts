@@ -49,9 +49,10 @@ export class OrganizationComponent {
   public treeJson: any;
 
   constructor(private service: ClustService) {
-    this.service.get('/organization/1').subscribe(data => {
+    this.service.get('/organization/2').subscribe(data => {
       // Read the result field from the JSON response.
       this.treeJson = [];
+      this.organizationTree = data;
       this.getJsonTree([data], this.treeJson);
     });
   }
