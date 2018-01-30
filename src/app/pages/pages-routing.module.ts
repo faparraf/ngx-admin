@@ -17,8 +17,8 @@ const routes: Routes = [{
     path: 'activos',
     loadChildren: './activos/activos.module#ActivosModule',
   }, {
-    path: 'clust',
-    loadChildren: './clust/clust.module#ClustModule',
+    path: 'cluster',
+    loadChildren: './cluster/cluster.module#ClusterModule',
   }, {
     path: 'reportes',
     loadChildren: './reportes/reportes.module#ReportesModule',

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ConfiguracionComponent } from './configuracion.component';
 import { AbstractformComponent } from './abstractform/abstractform.component';
 import { OrganizationComponent } from './organization/organization.component';
+import { ProcesoComponent } from './proceso/proceso.component';
+import { PlantillaComponent } from './plantilla/plantilla.component';
 
 const routes: Routes = [{
   path: '',
@@ -13,6 +15,12 @@ const routes: Routes = [{
   }, {
     path: 'organization',
     component: OrganizationComponent,
+  }, {
+    path: 'proceso',
+    component: ProcesoComponent,
+  }, {
+    path: 'plantilla',
+    component: PlantillaComponent,
   },
 ],
 }];
@@ -29,4 +37,6 @@ export const routedComponents = [
   ConfiguracionComponent,
   AbstractformComponent,
   OrganizationComponent,
+  ProcesoComponent,
+  PlantillaComponent,
 ];

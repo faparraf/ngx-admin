@@ -17,11 +17,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Plantilla de Activos',
-        link: '/pages/configuracion/abstract-form',
+        link: '/pages/configuracion/plantilla',
       },
       {
         title: 'Procesos',
-        link: '/pages/configuracion/procesos',
+        link: '/pages/configuracion/proceso',
       },
     ],
   },
@@ -50,12 +50,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Clust',
+    title: 'Cluster',
     icon: 'nb-keypad',
     children: [
       {
         title: 'Agrupamiento',
-        link: '/pages/clust/agrupamiento',
+        link: '/pages/cluster/agrupamiento',
       },
     ],
   },
