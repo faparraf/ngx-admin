@@ -13,15 +13,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Organización',
-        link: '/pages/tables/organization',
+        link: '/pages/configuracion/organization',
       },
       {
         title: 'Plantilla de Activos',
-        link: '/pages/tables/activos',
+        link: '/pages/configuracion/activos',
       },
       {
         title: 'Procesos',
-        link: '/pages/tables/procesos',
+        link: '/pages/configuracion/procesos',
       },
     ],
   },
