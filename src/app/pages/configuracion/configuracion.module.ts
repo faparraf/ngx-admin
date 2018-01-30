@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
-import { TablesRoutingModule, routedComponents } from './tables-routing.module';
+import { ConfiguracionRoutingModule, routedComponents } from './configuracion-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
 
 @NgModule({
   imports: [
     ThemeModule,
-    TablesRoutingModule,
+    ConfiguracionRoutingModule,
     Ng2SmartTableModule,
   ],
   declarations: [
@@ -17,4 +17,8 @@ import { ClustService } from '../../@core/data/clust.service';
     ClustService,
   ],
 })
-export class TablesModule { }
+export class ConfiguracionModule { }
+
+
+
+

@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 
 
 @Component({
-  selector: 'ngx-app-abstractform',
+  selector: 'ngx-abstractform',
   templateUrl: './abstractform.component.html',
   styleUrls: ['./abstractform.component.scss'],
 })

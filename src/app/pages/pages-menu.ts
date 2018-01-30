@@ -12,34 +12,60 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-gear',
     children: [
       {
-        title: 'Smart Table',
-        link: '/pages/tables/smart-table',
+        title: 'Organización',
+        link: '/pages/configuracion/organization',
       },
       {
-        title: 'Abstract Form',
-        link: '/pages/tables/abstractform',
+        title: 'Plantilla de Activos',
+        link: '/pages/configuracion/plantilla',
+      },
+      {
+        title: 'Procesos',
+        link: '/pages/configuracion/proceso',
       },
     ],
   },
   {
-    title: 'Auth',
-    icon: 'nb-locked',
+    title: 'Activos',
+    icon: 'nb-list',
     children: [
       {
-        title: 'Login',
-        link: '/auth/login',
+        title: 'Gestión',
+        link: '/pages/activos/gestion',
       },
       {
-        title: 'Register',
-        link: '/auth/register',
+        title: 'Cargar',
+        link: '/pages/activos/cargar',
       },
+    ],
+  },
+  {
+    title: 'Iteración',
+    icon: 'nb-location',
+    children: [
       {
-        title: 'Request Password',
-        link: '/auth/request-password',
+        title: 'General',
+        link: '/pages/iteracion/general',
       },
+    ],
+  },
+  {
+    title: 'Cluster',
+    icon: 'nb-keypad',
+    children: [
       {
-        title: 'Reset Password',
-        link: '/auth/reset-password',
+        title: 'Agrupamiento',
+        link: '/pages/cluster/agrupamiento',
+      },
+    ],
+  },
+  {
+    title: 'Reportes',
+    icon: 'nb-bar-chart',
+    children: [
+      {
+        title: 'General',
+        link: '/pages/reportes/general',
       },
     ],
   },

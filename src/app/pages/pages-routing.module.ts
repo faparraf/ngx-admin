@@ -11,26 +11,20 @@ const routes: Routes = [{
     path: 'dashboard',
     component: DashboardComponent,
   }, {
-    path: 'ui-features',
-    loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
+    path: 'configuracion',
+    loadChildren: './configuracion/configuracion.module#ConfiguracionModule',
   }, {
-    path: 'components',
-    loadChildren: './components/components.module#ComponentsModule',
+    path: 'activos',
+    loadChildren: './activos/activos.module#ActivosModule',
   }, {
-    path: 'maps',
-    loadChildren: './maps/maps.module#MapsModule',
+    path: 'cluster',
+    loadChildren: './cluster/cluster.module#ClusterModule',
   }, {
-    path: 'charts',
-    loadChildren: './charts/charts.module#ChartsModule',
+    path: 'reportes',
+    loadChildren: './reportes/reportes.module#ReportesModule',
   }, {
-    path: 'editors',
-    loadChildren: './editors/editors.module#EditorsModule',
-  }, {
-    path: 'forms',
-    loadChildren: './forms/forms.module#FormsModule',
-  }, {
-    path: 'tables',
-    loadChildren: './tables/tables.module#TablesModule',
+    path: 'iteracion',
+    loadChildren: './iteracion/iteracion.module#IteracionModule',
   }, {
     path: '',
     redirectTo: 'dashboard',
