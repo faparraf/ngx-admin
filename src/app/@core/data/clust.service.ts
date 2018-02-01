@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Config } from './../../app-config'
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -7,11 +8,13 @@ const httpOptions = {
 
 const path = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test';
 
+
 @Injectable()
 export class ClustService {
 
     constructor(private http:HttpClient) {
     }
+
     get(endpoint) {
         return this.http.get(path + endpoint);
     }
