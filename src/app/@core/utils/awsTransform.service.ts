@@ -28,6 +28,17 @@ export class AwsTransformService {
         return o;
     }
 
+    static getElementAws(item) {
+        let newTree = '{';
+        item.forEach(element => {
+            const data = '"' + element.label + '":{"' + element.tipo + '":"' + element.valor + '"}';
+            newTree += data + ','
+          });
+        newTree = newTree.substring(0, newTree.length - 1) + '}';
+        const object = JSON.parse(newTree);
+        return object;
+    }
+
     static getArray(item): any {
         const temporal = [];
         for (const i in item) {

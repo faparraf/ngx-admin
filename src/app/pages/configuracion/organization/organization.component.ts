@@ -1,14 +1,14 @@
 import { Component} from '@angular/core';
 import { ClustService } from '../../../@core/data/clust.service';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../ui-features/modals/modal/modal.component';
+import { UUID } from 'angular2-uuid';
 
 
-const tree =    [{
+let tree =    [{
   'id': {
   'S': 'af12',
-  },
-  'root': {
-  'S': '1',
   },
   'name': {
   'S': 'uno',
@@ -17,18 +17,12 @@ const tree =    [{
   'id': {
   'S': 'af12.af13',
   },
-  'root': {
-  'S': '1',
-  },
   'name': {
   'S': 'unopuntouno',
   },
 }, {
   'id': {
   'S': 'ab12',
-  },
-  'root': {
-  'S': '1',
   },
   'name': {
   'S': 'dos',
@@ -42,7 +36,7 @@ const tree =    [{
 })
 
 export class OrganizationComponent {
-
+  public edit = false;
   public organizationTree: any;
   public org: any;
 
@@ -53,6 +47,7 @@ export class OrganizationComponent {
 
   public editOrganization(org: any) {
     this.org = org;
+    AwsTransformService.getElementAws(org);
   }
 
   public getText(text: string, listOrg: any) {
@@ -65,7 +60,54 @@ export class OrganizationComponent {
     return texto;
   }
 
-  constructor(private service: ClustService) {
+  public addOrganization(org: any) {
+    let i = -1, count = 0;
+    this.organizationTree.forEach(element => {
+      count ++;
+      if (element === org) {
+        i = count;
+      }
+    });
+    const newProject = {
+      id : {
+       S : tree[i - 1].id.S + '.' + UUID.UUID(),
+      },
+      name: {
+       S : 'Nuevo Proyecto',
+      },
+    };
+    this.organizationTree.splice(i, 0, AwsTransformService.getArray(newProject));
+    tree.splice(i, 0, newProject);
+  }
+
+  public deleteOrganization(org: any) {
+    let i = -1, count = 0;
+    this.organizationTree.forEach(element => {
+      count ++;
+      if (element === org) {
+        i = count;
+      }
+    });
+    this.organizationTree.splice(i - 1, 1);
+    tree.splice(i - 1, 1);
+  }
+
+  public addOrganizationEnd(org: any) {
+    const newProject = {
+      id : {
+       S : UUID.UUID(),
+      },
+      name: {
+       S : 'Nuevo Proyecto',
+      },
+    };
+    this.organizationTree.push(AwsTransformService.getArray(newProject));
+    tree.push(newProject);
+  }
+
+  public editAtrib(atrib) {
+  }
+  constructor(private service: ClustService, private modalService: NgbModal) {
       // Read the result field from the JSON response.
       this.organizationTree = AwsTransformService.getJsonTree(tree);
   }
