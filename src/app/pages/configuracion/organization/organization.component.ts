@@ -116,7 +116,7 @@ export class OrganizationComponent {
     tree.splice(i - 1, 1);
   }
 
-  public addOrganizationEnd(org: any) {
+  public addOrganizationEnd() {
     const newProject = {
       id : {
        S : UUID.UUID(),
