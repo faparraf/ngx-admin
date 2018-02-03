@@ -2,6 +2,7 @@ const BASEPATH = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/';
 
 export const Config = {
     PROD : {
+        BASEPATH: BASEPATH,
         ORGANIZATION: BASEPATH + 'organization/',
         TOKEN: {
             AUTORIZATION_URL: 'https://autenticacion.udistrital.edu.co/oauth2/authorize',

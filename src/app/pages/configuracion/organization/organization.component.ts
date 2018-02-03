@@ -1,12 +1,9 @@
 import { Component} from '@angular/core';
-import { ClustService } from '../../../@core/data/clust.service';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../ui-features/modals/modal/modal.component';
 import { UUID } from 'angular2-uuid';
 
 
-let tree =    [{
+const tree =    [{
   'id': {
   'S': 'af12',
   },
@@ -36,9 +33,37 @@ let tree =    [{
 })
 
 export class OrganizationComponent {
-  public edit = false;
+  public attrib: any[];
   public organizationTree: any;
   public org: any;
+
+  public find (array, item) {
+    let i = -1, count = 0;
+    array.forEach(element => {
+      count ++;
+      if (element === item) {
+        i = count;
+      }
+    });
+    return i;
+  };
+
+  public findId (array, item) {
+    let i = -1, count = 0;
+    array.forEach(element => {
+      count ++;
+      if (element.id === item.id) {
+        i = count;
+      }
+    });
+    return i;
+  };
+
+  public deleteAtrrib(atrib)  {
+    const i: any = this.find(this.attrib, atrib);
+    this.attrib.splice(i - 1, 1);
+    tree.splice(i - 1, 1);
+  }
 
   public level(id: any) {
     const level = id.split('.');
@@ -48,6 +73,17 @@ export class OrganizationComponent {
   public editOrganization(org: any) {
     this.org = org;
     AwsTransformService.getElementAws(org);
+  }
+  public addAttrib() {
+    if (this.org !== undefined) {
+      this.attrib.push({
+        valor:'Nuevo atributo',
+        label:'Nombre atributo',
+        tipo :'S',
+      })
+    }else {
+      alert('Debe seleccione un proyecto');
+    }
   }
 
   public getText(text: string, listOrg: any) {
@@ -61,16 +97,10 @@ export class OrganizationComponent {
   }
 
   public addOrganization(org: any) {
-    let i = -1, count = 0;
-    this.organizationTree.forEach(element => {
-      count ++;
-      if (element === org) {
-        i = count;
-      }
-    });
+    const i: any = this.find(this.organizationTree, org);
     const newProject = {
       id : {
-       S : tree[i - 1].id.S + '.' + UUID.UUID(),
+       S : tree[ i - 1].id.S + '.' + UUID.UUID(),
       },
       name: {
        S : 'Nuevo Proyecto',
@@ -81,13 +111,7 @@ export class OrganizationComponent {
   }
 
   public deleteOrganization(org: any) {
-    let i = -1, count = 0;
-    this.organizationTree.forEach(element => {
-      count ++;
-      if (element === org) {
-        i = count;
-      }
-    });
+    const i: any = this.find(this.organizationTree, org);
     this.organizationTree.splice(i - 1, 1);
     tree.splice(i - 1, 1);
   }
@@ -105,10 +129,19 @@ export class OrganizationComponent {
     tree.push(newProject);
   }
 
-  public editAtrib(atrib) {
+  public saveAttribs() {
+    const i = this.findId(this.organizationTree, this.org);
+
+    this.org = this.org.concat(this.attrib);
+    this.organizationTree.splice(i - 1, 1);
+    this.organizationTree.splice(i - 1, 0, this.org);
+    tree.splice(i - 1, 1);
+    tree.splice(i - 1, 0, AwsTransformService.getElementAws(this.org));
+    this.attrib = [];
   }
-  constructor(private service: ClustService, private modalService: NgbModal) {
+  constructor() {
       // Read the result field from the JSON response.
       this.organizationTree = AwsTransformService.getJsonTree(tree);
+      this.attrib = [];
   }
 }
