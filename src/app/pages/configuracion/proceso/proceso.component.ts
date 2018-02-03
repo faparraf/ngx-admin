@@ -16,7 +16,7 @@ export class ProcesoComponent implements OnInit {
   getNodeById(id) {
     let node = null;
     this.nodes.forEach(element => {
-      if( element.id === id) {
+      if (element.id === id) {
         node = element;
       }
     });
