@@ -4,7 +4,6 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { ConfiguracionRoutingModule, routedComponents } from './configuracion-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
 import { AwsTransformService } from '../../@core/utils/awsTransform.service';
-import { ModalComponent } from '../ui-features/modals/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -14,14 +13,12 @@ import { ModalComponent } from '../ui-features/modals/modal/modal.component';
   ],
   declarations: [
     ...routedComponents,
-    ModalComponent,
   ],
   providers: [
     ClustService,
     AwsTransformService,
   ],
   entryComponents: [
-    ModalComponent,
   ],
 })
 export class ConfiguracionModule { }
