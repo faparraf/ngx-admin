@@ -1,3 +1,68 @@
-<p>
-  proceso works!
-</p>
+<div class="row">
+    <div class="col-lg-4">
+    <nb-card>
+      <nb-card-header>
+          Gestión de Estados
+      </nb-card-header>
+      <nb-card-body>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label for="node" class="form-control-label ">Nuevo Estado</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="text " [(ngModel)]="estado" id="node" [ngModelOptions]="{standalone: true} " class="form-control ">
+            </div>
+            <div class="col-sm-2 center">
+                <a class="btn btn-primary btn-tn" (click)="addNode()" href="#/pages/configuracion/proceso">
+                    <i class="ion-plus-round"></i>
+                </a>
+            </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+        <nb-card-header>
+            Gestión de aristas
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-5 offset-1">
+                <label><b> Desde </b></label>
+                <div *ngFor="let item of nodes" class="row">
+                    <input type="radio" name="desde." (click)="desde.options = item.id" 
+                     [checked]="item.id === desde.options">
+                    <label>{{item.label}}</label>
+                </div>
+            </div>
+            <div class="col-5">
+                <label><b>Hasta</b></label>
+                <div *ngFor="let item of nodes" class="row">
+                    <input type="radio" name="hasta.options" (click)="hasta.options = item.id" 
+                      [checked]="item.id === hasta.options">
+                    <label>{{item.label}}</label>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1 center">
+                <a class="btn btn-primary btn-tn" (click)="addEdge()" href="#/pages/configuracion/proceso">
+                    <i class="ion-plus-round"></i>
+                </a>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+  <div class="col-lg-8">
+      <nb-card>
+            <nb-card-header>
+                Vista previa estados
+            </nb-card-header>
+            <nb-card-body>
+              <div id="mynetwork" style="height:400px;width:100%">
+              </div>
+            </nb-card-body>
+      </nb-card>
+  </div>
+</div>

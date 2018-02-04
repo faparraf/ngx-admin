@@ -3,6 +3,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ConfiguracionRoutingModule, routedComponents } from './configuracion-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
+import { AwsTransformService } from '../../@core/utils/awsTransform.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { ClustService } from '../../@core/data/clust.service';
   ],
   providers: [
     ClustService,
+    AwsTransformService,
+  ],
+  entryComponents: [
   ],
 })
 export class ConfiguracionModule { }

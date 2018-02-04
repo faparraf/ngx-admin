@@ -1,53 +1,94 @@
 <div class="row">
-    <div class="col-12">
+    <div class="col-6">
         <nb-card>
             <nb-card-header>
-                Organizaciones
+                Proyectos
             </nb-card-header>
             <nb-card-body>
-                <div *ngFor="let org of treeJson; let i = index">
-                    <a class="icon-container" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                        <h3> <i [hidden]="isCollapsed" class="nb-arrow-down"></i><i [hidden]="!isCollapsed" class="nb-arrow-right"></i> Organización # {{i+1}} </h3>
-                    </a>
-                    <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                        <nb-card>
-                            <nb-card-body>
-                                <form class="form-horizontal">
-                                    <div class="form-group row" *ngFor="let campo of org.Item" [ngSwitch]="campo.tipo">
-                                        <label for="{{campo.label}}" class="col-sm-2 form-control-label">{{campo.label}}</label>
-                                        <div class="col-sm-9">
-                                            <input type="range" [(ngModel)]="campo.valor" *ngSwitchCase="'range'" id="{{campo.label}}" class="form-control">
-                                            <input type="text" [(ngModel)]="campo.valor" *ngSwitchCase="'S'" id="{{campo.label}}" [ngModelOptions]="{standalone: true}" class="form-control">
-                                            <input type="date" [(ngModel)]="campo.valor" *ngSwitchCase="'date'" id="{{campo.label}}" class="form-control">
-                                            <input type="number" [(ngModel)]="campo.valor" *ngSwitchCase="'N'" id="{{campo.label}}" class="form-control">
-                                            <input type="email" [(ngModel)]="campo.valor" *ngSwitchCase="'email'" id="{{campo.label}}" class="form-control">
-                                            <textarea type="text" [(ngModel)]="campo.valor" *ngSwitchCase="'area'" id="{{campo.label}}" class="form-control"></textarea>
-                                            <nb-checkbox *ngSwitchCase="'B'" [(ngModel)]="campo.valor" id="{{campo.label}}"></nb-checkbox>
-                                        </div>
-                                    </div>
-                                </form>
-                            </nb-card-body>
-                        </nb-card>
+                <div *ngFor="let org of organizationTree">
+                    <div class="row identado{{level(getText('id',org))}}">
+                        <div class="col-sm-6">
+                            <a class="icon-container" (click)="editOrganization(org)" href="#/pages/configuracion/organization">
+                                <h4><i class="nb-play"></i> {{getText('name',org)}}
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a class="btn btn-success btn-tn" (click)="editOrganization(org)" href="#/pages/configuracion/organization">
+                                <i class="ion-edit"></i>
+                            </a>
+                            <a class="btn btn-primary btn-tn" (click)="addOrganization(org)" href="#/pages/configuracion/organization">
+                                <i class="ion-plus-round"></i>
+                            </a>
+                            <a class="btn btn-danger btn-tn" (click)="deleteOrganization(org)" href="#/pages/configuracion/organization">
+                                <i class="ion-trash-b"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="center">
+                    <a class="btn btn-primary btn-tn" (click)="addOrganizationEnd()" href="#/pages/configuracion/organization">
+                        <i class="ion-plus-round"></i>
+                    </a>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-6 ">
+        <nb-card>
+            <nb-card-header>
+                Editar Proyecto
+            </nb-card-header>
+            <nb-card-body>
+                <form class="form-horizontal ">
+                    <div class="form-group row " *ngFor="let campo of org " [ngSwitch]="campo.tipo ">
+                        <label for="{{campo.label}} " class="col-sm-3 form-control-label ">{{campo.label}}</label>
+                        <div class="col-sm-8">
+                            <input type="range " [(ngModel)]="campo.valor " *ngSwitchCase=" 'range' " id="{{campo.label}} " class="form-control ">
+                            <input type="text " [(ngModel)]="campo.valor " *ngSwitchCase=" 'S' " id="{{campo.label}} " [ngModelOptions]="{standalone: true} " class="form-control ">
+                            <input type="date " [(ngModel)]="campo.valor " *ngSwitchCase=" 'date' " id="{{campo.label}} " class="form-control ">
+                            <input type="number " [(ngModel)]="campo.valor " *ngSwitchCase=" 'N' " id="{{campo.label}} " class="form-control ">
+                            <input type="email " [(ngModel)]="campo.valor " *ngSwitchCase=" 'email' " id="{{campo.label}} " class="form-control ">
+                            <textarea type="text " [(ngModel)]="campo.valor " *ngSwitchCase=" 'area' " id="{{campo.label}} " class="form-control "></textarea>
+                            <nb-checkbox *ngSwitchCase=" 'B' " [(ngModel)]="campo.valor " id="{{campo.label}} "></nb-checkbox>
+                        </div>
+                    </div>
+                    <div class="form-group row " *ngFor="let campo of attrib " [ngSwitch]="campo.tipo ">
+                        <div class="col-sm-3">
+                            <input type="text " [(ngModel)]="campo.label " *ngSwitchCase=" 'S' " id="{{campo.label}} " [ngModelOptions]="{standalone: true} " class="form-control ">
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text " [(ngModel)]="campo.valor " *ngSwitchCase=" 'S' " id="{{campo.valor}} " [ngModelOptions]="{standalone: true} " class="form-control ">
+                        </div>
+                        <div class="col-sm-1 center">
+                            <a class="btn btn-danger btn-tn" (click)="deleteAtrrib(campo)" href="#/pages/configuracion/organization">
+                                <i class="ion-trash-b"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <a class="btn btn-primary btn-tn" (click)="addAttrib()" href="#/pages/configuracion/organization">
+                            <i class="ion-plus-round"></i>
+                        </a>
+                        <a class="btn btn-success btn-tn" (click)="saveAttribs()" href="#/pages/configuracion/organization">
+                            <i class="ion-checkmark"></i>
+                        </a>
+                    </div>
+                </form>
             </nb-card-body>
         </nb-card>
     </div>
 </div>
 <div class="row">
-    <div class="col-12">
-        <nb-card>
-            <nb-card-header>
-                Organizaciones
-            </nb-card-header>
-            <nb-card-body>
-                <pre>
-    {{organizationTree | json}}
-</pre>
-                <pre>
-    {{treeJson | json}}
-</pre>
-            </nb-card-body>
-        </nb-card>
-    </div>
+        <div class="col-6 ">
+            <pre>
+
+            </pre>
+        </div>
+        <div class="col-6 ">
+            <pre>
+                    {{organizationTree | json}}
+            </pre>
+        </div>
+
 </div>
