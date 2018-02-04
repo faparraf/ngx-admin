@@ -16,14 +16,14 @@ export class ProcesoComponent implements OnInit {
   public desde = { options: '' };
   public hasta = { options: '' };
 
-  getNodeById(id) {
-    let node = null;
-    this.nodes.forEach(element => {
-      if (element.id === id) {
-        node = element;
+  existEdge(from, to) {
+    let exist = false;
+    this.edges.forEach(element => {
+      if (element.from === from && element.to) {
+        exist = true;
       }
     });
-    return node;
+    return exist;
   }
 
   constructor() {
@@ -43,10 +43,14 @@ export class ProcesoComponent implements OnInit {
   addEdge() {
     if (this.desde.options !== '') {
       if (this.hasta.options !== '') {
-        this.edges.push({
-          from : this.desde.options,
-          to: this.hasta.options,
-        });
+        if (!this.existEdge(this.desde.options, this.hasta.options)) {
+          this.edges.push({
+            from : this.desde.options,
+            to: this.hasta.options,
+          });
+        }else {
+          alert('Ya existe esta arista');
+        }
         this.draw();
         this.desde.options = '';
         this.hasta.options = '';
