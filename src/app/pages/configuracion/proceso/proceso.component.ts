@@ -30,7 +30,7 @@ export class ProcesoComponent implements OnInit {
   }
 
   addNode() {
-    if(this.estado !== '') {
+    if (this.estado !== '') {
       this.nodes.push({
         id : UUID.UUID(),
         label: this.estado,
@@ -41,8 +41,8 @@ export class ProcesoComponent implements OnInit {
   }
 
   addEdge() {
-    if(this.desde.options !== '') {
-      if(this.hasta.options !== '') {
+    if (this.desde.options !== '') {
+      if (this.hasta.options !== '') {
         this.edges.push({
           from : this.desde.options,
           to: this.hasta.options,
@@ -128,6 +128,6 @@ export class ProcesoComponent implements OnInit {
           },
       },
     };
-    const network = new Vis.Network(container, data, options);
+    this.network = new Vis.Network(container, data, options);
   };
 }
