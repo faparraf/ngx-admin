@@ -12,7 +12,7 @@ export class AwsTransformService {
 
     static getElement(l, item): any {
         let element,
-        type;
+            type;
         for (const i in item) {
             if (item.hasOwnProperty(i)) {
                 type = i;
@@ -20,9 +20,26 @@ export class AwsTransformService {
             }
         }
         const o = new Object({
-            valor:element,
-            label:l,
-            tipo:type,
+            valor: element,
+            label: l,
+            tipo: type,
+        });
+        return o;
+    }
+
+    static getNormalElement(l, item): any {
+        let element,
+            type;
+        for (const i in item) {
+            if (item.hasOwnProperty(i)) {
+                type = i;
+                element = item[i];
+            }
+        }
+        const o = new Object({
+            valor: element,
+            label: l,
+            tipo: type,
         });
         return o;
     }
@@ -32,7 +49,7 @@ export class AwsTransformService {
         item.forEach(element => {
             const data = '"' + element.label + '":{"' + element.tipo + '":"' + element.valor + '"}';
             newTree += data + ','
-          });
+        });
         newTree = newTree.substring(0, newTree.length - 1) + '}';
         const object = JSON.parse(newTree);
         return object;
@@ -55,7 +72,25 @@ export class AwsTransformService {
         oldTree.forEach(element => {
             const data = AwsTransformService.getArray(element);
             newTree.push(data);
-          });
+        });
         return newTree;
+    }
+
+    static getElementColumnTable(element) {
+        return '"' + element.M.field.S + '":{"title": "' + element.M.label.S + '"}';
+    }
+    static getColumnTable(org) {
+        let array = '{';
+        org.Item.fields.L.forEach(element => {
+            array += AwsTransformService.getElementColumnTable(element) + ',';
+        });
+        array = array.substring(0, array.length - 1) + '}';
+        return JSON.parse(array);
+    }
+    static getNormalArray(list) {
+        const array = [];
+        list.Items.forEach(element => {
+            array.push(JSON.parse(AwsTransformService.getElementColumnTable(element)));
+        });
     }
 }

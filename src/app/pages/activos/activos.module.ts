@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ActivosRoutingModule, routedComponents } from './activos-routing.module';
-import { ClustService } from '../../@core/data/clust.service';
+import { AssetsService } from '../../@core/data/assets.service';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { ClustService } from '../../@core/data/clust.service';
     ...routedComponents,
   ],
   providers: [
-    ClustService,
+    AssetsService,
   ],
 })
 
