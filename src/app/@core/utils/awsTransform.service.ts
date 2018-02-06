@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
+const attr = require('dynamodb-data-types').AttributeValue;
 
 @Injectable()
 export class AwsTransformService {
@@ -90,7 +91,9 @@ export class AwsTransformService {
     static getNormalArray(list) {
         const array = [];
         list.Items.forEach(element => {
-            array.push(JSON.parse(AwsTransformService.getElementColumnTable(element)));
+            array.push(attr.unwrap(element));
         });
+        return array;
     }
+
 }

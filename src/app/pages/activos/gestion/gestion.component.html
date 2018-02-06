@@ -1,10 +1,9 @@
 <nb-card>
     <nb-card-header>
-        Smart Table
+       Activos
     </nb-card-header>
-
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="data" (deleteConfirm)="onDeleteConfirm($event)">
+        <ng2-smart-table [settings]="settings" [source]="data"  (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)">
         </ng2-smart-table>
     </nb-card-body>
 </nb-card>

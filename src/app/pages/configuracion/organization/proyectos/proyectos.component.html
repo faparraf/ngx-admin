@@ -5,10 +5,16 @@
     <nb-card-body>
         <div *ngFor="let project of listProject">
             <div class="row identado{{level(getText('id',project))}}">
-                <div class="col-sm-6">
+                <div *ngIf="project === projectLocal " class="row activo" >
                     <a class="icon-container" (click)="asign(project)" >
-                        <h4><i class="nb-play"></i> {{getText('name',project)}}
-                        </h4>
+                        <span><i class="nb-play"></i> {{getText('name',project)}}
+                        </span>
+                    </a>
+                </div>
+                <div *ngIf="project !== projectLocal " class="row" >
+                    <a class="icon-container" (click)="asign(project)" >
+                        <span><i class="nb-play"></i> {{getText('name',project)}}
+                        </span>
                     </a>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-4">
-        <ngx-proyectos [projectLocal]="org$ | async" (getProject)="getOrg($event)"></ngx-proyectos>
+        <ngx-proyectos [projectLocal]="project | async" (getProject)="getOrg($event)"></ngx-proyectos>
         <nb-card>
             <nb-card-header>
                 Gestión de Estados

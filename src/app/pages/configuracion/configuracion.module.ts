@@ -6,7 +6,7 @@ import { ClustService } from '../../@core/data/clust.service';
 import { AwsTransformService } from '../../@core/utils/awsTransform.service';
 import { OrganizationService } from '../../@core/data/organization.service';
 import { AssetsService } from '../../@core/data/assets.service';
-// import { ProyectosComponent } from './organization/proyectos/proyectos.component';
+import { ProyectosComponent } from './organization/proyectos/proyectos.component';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { AssetsService } from '../../@core/data/assets.service';
   ],
   declarations: [
     ...routedComponents,
-    // ProyectosComponent,
+    ProyectosComponent,
   ],
   providers: [
     AssetsService,
@@ -26,7 +26,7 @@ import { AssetsService } from '../../@core/data/assets.service';
     OrganizationService,
   ],
   entryComponents: [
-    // ProyectosComponent,
+    ProyectosComponent,
   ],
 })
 export class ConfiguracionModule { }
