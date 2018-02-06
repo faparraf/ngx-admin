@@ -1,0 +1,17 @@
+<nb-card>
+    <nb-card-header>
+        Proyectos
+    </nb-card-header>
+    <nb-card-body>
+        <div *ngFor="let project of listProject">
+            <div class="row identado{{level(getText('id',project))}}">
+                <div class="col-sm-6">
+                    <a class="icon-container" (click)="asign(project)" >
+                        <h4><i class="nb-play"></i> {{getText('name',project)}}
+                        </h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
