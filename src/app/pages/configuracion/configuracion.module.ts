@@ -4,6 +4,10 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { ConfiguracionRoutingModule, routedComponents } from './configuracion-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
 import { AwsTransformService } from '../../@core/utils/awsTransform.service';
+import { OrganizationService } from '../../@core/data/organization.service';
+import { AssetsService } from '../../@core/data/assets.service';
+import { ProyectosComponent } from './organization/proyectos/proyectos.component';
+
 
 @NgModule({
   imports: [
@@ -13,12 +17,16 @@ import { AwsTransformService } from '../../@core/utils/awsTransform.service';
   ],
   declarations: [
     ...routedComponents,
+    ProyectosComponent,
   ],
   providers: [
+    AssetsService,
     ClustService,
     AwsTransformService,
+    OrganizationService,
   ],
   entryComponents: [
+    ProyectosComponent,
   ],
 })
 export class ConfiguracionModule { }

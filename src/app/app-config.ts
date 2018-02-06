@@ -4,6 +4,8 @@ export const Config = {
     PROD : {
         BASEPATH: BASEPATH,
         ORGANIZATION: BASEPATH + 'organization/',
+        ASSETS: '/asset',
+        ASSET: 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/asset/',
         TOKEN: {
             AUTORIZATION_URL: 'https://autenticacion.udistrital.edu.co/oauth2/authorize',
             URL_USER_INFO: 'https://autenticacion.udistrital.edu.co/oauth2/userinfo',
