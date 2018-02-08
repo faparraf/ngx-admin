@@ -1,3 +1,15 @@
-<p>
-  plantilla works!
-</p>
+<div class="row">
+  <div class="col-lg-4">
+    <ngx-proyectos [projectLocal]="project" (getProject)="getOrg($event)"></ngx-proyectos>
+  </div>
+<div class="col-8">
+    <nb-card>
+        <nb-card-header>
+           Atributos
+        </nb-card-header>
+        <nb-card-body>
+            <ng2-smart-table [settings]="settings" [source]="data"  (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)">
+            </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+</div>
