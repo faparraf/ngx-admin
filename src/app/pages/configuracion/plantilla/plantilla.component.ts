@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+// import { OrganizationService } from '../../../@core/data/organization.service';
+import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
+import { AssetsService } from '../../../@core/data/assets.service';
+import { LocalDataSource } from 'ng2-smart-table';
+
 
 @Component({
   selector: 'ngx-plantilla',
@@ -7,7 +12,8 @@ import { Component } from '@angular/core';
 })
 export class PlantillaComponent {
   project: any;
-
+  source: LocalDataSource;
+  data: any;
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -21,7 +27,6 @@ export class PlantillaComponent {
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
     },
     columns: {
       field: {
@@ -38,7 +43,19 @@ export class PlantillaComponent {
   getOrg(event): void {
     this.project = event;
   }
-  constructor() { }
 
+  constructor( private assetsService: AssetsService) {
+    this.data = [];
+    this.assetsService.getSettings(1)
+      .subscribe(res => {
+        this.data = AwsTransformService.getColumnTableArray(res);
+        this.source = new LocalDataSource(this.data);
+        // console.log(this.data);
+      });
+  }
 
+  guardarPlantilla(): void {
+    // console.log(this.source);
+    AwsTransformService.getColumnTableArrayInverse(this.source);
+  }
 }

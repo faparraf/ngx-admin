@@ -77,9 +77,12 @@ export class AwsTransformService {
         return newTree;
     }
 
+    // Elemento de columnas para smartTable (assets)
     static getElementColumnTable(element) {
         return '"' + element.M.field.S + '":{"title": "' + element.M.label.S + '"}';
     }
+
+    // Array de columnas para smartTable (assets)
     static getColumnTable(org) {
         let array = '{';
         org.Item.fields.L.forEach(element => {
@@ -88,6 +91,27 @@ export class AwsTransformService {
         array = array.substring(0, array.length - 1) + '}';
         return JSON.parse(array);
     }
+
+    // Array de columnas para smartTable (edición)
+    static getColumnTableArray(org) {
+        const array = [];
+        org.Item.fields.L.forEach(element => {
+            array.push(attr.unwrap(element.M));
+        });
+        return array;
+    }
+
+    // objeto AWS de columnas smartTable LocalDataSource
+    static getColumnTableArrayInverse(org) {
+        const array = [];
+        org.data.forEach(element => {
+            array.push({ M: attr.wrap(element) });
+        });
+        const object = { fields: { L: array } };
+        return object;
+        // console.log(object);
+    }
+
     static getNormalArray(list) {
         const array = [];
         list.Items.forEach(element => {
@@ -95,5 +119,4 @@ export class AwsTransformService {
         });
         return array;
     }
-
 }
