@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Config } from './../../app-config'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+// const attr = require('dynamodb-data-types').AttributeValue;
+
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };

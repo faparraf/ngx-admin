@@ -6,8 +6,7 @@ const attr = require('dynamodb-data-types').AttributeValue;
 const httpOptions = {
     headers: new HttpHeaders({ 'Accept': 'application/json' }),
 };
-
-httpOptions.headers.append('Content-Type', 'application/json');
+httpOptions.headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
 httpOptions.headers.append('Access-Control-Allow-Headers', 'Content-Type');
 
 const path = Config.PROD.BASEPATH;
