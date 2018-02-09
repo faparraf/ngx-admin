@@ -26,7 +26,7 @@
   - Charts
   - Editors
   
-And many more!
+And many more
 
 ### Demo
 
