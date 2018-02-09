@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Config } from './../../app-config';
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 
@@ -13,32 +13,28 @@ const authData = {
 };
 
 @Injectable()
-export class AmazonService {
-    auth: CognitoAuth;
-    constructor() {
-        this.auth = new CognitoAuth(authData);
-        if (location.search.substring(1) !== '') {
-            const curUrl = window.location.href;
-            this.auth.parseCognitoWebResponse(curUrl);
-            const queryString = location.search.substring(1);
-            const regex = /([^&=]+)=([^&]*)/g;
-            let m;
-            while (!!(m = regex.exec(queryString))) {
-                if (window.sessionStorage.getItem(decodeURIComponent(m[1])) !== undefined) {
-                    window.sessionStorage.setItem(decodeURIComponent(m[1]), decodeURIComponent(m[2]))
-                }
-            }
-        }
+export class AmazonService implements OnInit {
+
+    ngOnInit(): void {
+        const curUrl = window.location.href;
+        this.auth.parseCognitoWebResponse(curUrl);
     }
 
-    public getSesion() {
+    auth: CognitoAuth;
+
+    constructor() {
+        this.auth = new CognitoAuth(authData);
+        this.getSesion();
+    }
+
+    getSesion() {
         if (window.sessionStorage.getItem('id_token') === null ||
             window.sessionStorage.getItem('id_token') === undefined) {
             this.auth.getSession();
         }
     }
 
-    public signOut() {
+    signOut() {
         this.auth.signOut();
     }
 
