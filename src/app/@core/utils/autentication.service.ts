@@ -36,6 +36,7 @@ export class AutenticationService {
             let url = Config.LOCAL.TOKEN.REFRESH_TOKEN;
             const dato = {};
             url += '?grant_type=authorization_code';
+            url += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
             url += '&code=' + window.sessionStorage.getItem('code');
             url += '&redirect_uri=' + Config.LOCAL.TOKEN.REDIRECT_URL;
             this.post(url, dato, this.setting_basic).subscribe(
@@ -67,7 +68,7 @@ export class AutenticationService {
         let m;
         if (this.logoutValid()) {
             this.clearUrl();
-        }else {
+        } else {
             while (!!(m = regex.exec(queryString))) {
                 if (window.sessionStorage.getItem(decodeURIComponent(m[1])) !== undefined) {
                     window.sessionStorage.setItem(decodeURIComponent(m[1]), decodeURIComponent(m[2]))
@@ -104,7 +105,7 @@ export class AutenticationService {
         if (window.sessionStorage.getItem('state') === state) {
             window.sessionStorage.clear();
             valid = true;
-        }else {
+        } else {
             valid = false;
         }
         return valid;
@@ -122,7 +123,7 @@ export class AutenticationService {
             'client_id=' + encodeURIComponent(this.params.CLIENTE_ID) + '&' +
             'redirect_uri=' + encodeURIComponent(this.params.REDIRECT_URL) + '&' +
             'response_type=' + encodeURIComponent(this.params.RESPONSE_TYPE) + '&' +
-            'scope=' + encodeURIComponent(this.params.SCOPE);
+            'scope=' + this.params.SCOPE;
         if (this.params.nonce) {
             url += '&nonce=' + encodeURIComponent(this.params.nonce);
         }

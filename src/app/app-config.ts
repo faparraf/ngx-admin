@@ -16,7 +16,7 @@ export const Config = {
             CLIENT_SECRET: 'j1b7ov4klfmij1f95lt7anqltb704p8b63hfu6v8faageilir0u',
             REDIRECT_URL: 'https://clust.dijkstra-ing.com/',
             RESPONSE_TYPE: 'code',
-            SCOPE: 'profile',
+            SCOPE: 'openid+profile',
             BUTTON_CLASS: 'btn btn-warning btn-sm',
             SIGN_OUT_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oidc/logout',
             SIGN_OUT_REDIRECT_URL: 'https://clust.dijkstra-ing.com/',
