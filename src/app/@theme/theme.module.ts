@@ -77,7 +77,7 @@ const NB_THEME_PROVIDERS = [
     {
       name: 'default',
     },
-    [ DEFAULT_THEME, COSMIC_THEME ],
+    [DEFAULT_THEME, COSMIC_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
@@ -93,7 +93,7 @@ export class ThemeModule {
     return <ModuleWithProviders>{
       ngModule: ThemeModule,
       providers: [...NB_THEME_PROVIDERS,
-        AutenticationService,],
+        AutenticationService],
     };
   }
 }

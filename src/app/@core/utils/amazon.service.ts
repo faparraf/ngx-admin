@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Config } from './../../app-config';
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 
