@@ -47,6 +47,10 @@ export class HeaderComponent implements OnInit {
     this.amazon.getSesion();
   }
 
+  logout() {
+    this.amazon.signOut();
+  }
+
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     return false;
