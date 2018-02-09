@@ -36,7 +36,7 @@ export class AutenticationService {
             let url = Config.LOCAL.TOKEN.REFRESH_TOKEN;
             const dato = {};
             url += '?grant_type=authorization_code';
-            url += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
+            url += '&client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
             url += '&code=' + window.sessionStorage.getItem('code');
             url += '&redirect_uri=' + Config.LOCAL.TOKEN.REDIRECT_URL;
             this.post(url, dato, this.setting_basic).subscribe(
