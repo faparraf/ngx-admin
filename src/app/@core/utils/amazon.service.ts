@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
 import { Config } from './../../app-config';
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 
@@ -20,7 +18,7 @@ export class AmazonService {
     constructor() {
         this.auth = new CognitoAuth(authData);
         this.getSesion();
-        var curUrl = window.location.href;
+        const curUrl = window.location.href;
         this.auth.parseCognitoWebResponse(curUrl);
     }
 
