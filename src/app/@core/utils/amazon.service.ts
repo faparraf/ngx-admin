@@ -23,7 +23,8 @@ export class AmazonService {
     }
 
     getSesion() {
-        if (window.sessionStorage.getItem('id_token') === null) {
+        if (window.sessionStorage.getItem('id_token') === null ||
+         window.sessionStorage.getItem('id_token') === undefined) {
             this.auth.getSession();
         }
     }
