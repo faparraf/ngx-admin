@@ -31,7 +31,7 @@ export class AutenticationService {
         return this.http.post(url, body, header)
     }
 
-    public getLogoutUrl(){
+    public getLogoutUrl() {
         return this.logOut;
     }
 
@@ -92,7 +92,7 @@ export class AutenticationService {
                 const id_token = window.sessionStorage.getItem('id_token').split('.');
                 this.payload = JSON.parse(atob(id_token[1]));
                 this.logOut = Config.LOCAL.TOKEN.SIGN_OUT_URL;
-                this.logOut += '?client_id=' +  Config.LOCAL.TOKEN.CLIENTE_ID;
+                this.logOut += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
                 this.logOut += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
                 this.logOut += '&state=' + window.sessionStorage.getItem('state');
             }
