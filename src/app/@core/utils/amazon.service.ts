@@ -20,6 +20,14 @@ export class AmazonService {
         if (location.search.substring(1) !== '') {
             const curUrl = window.location.href;
             this.auth.parseCognitoWebResponse(curUrl);
+            const queryString = location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let m;
+            while (!!(m = regex.exec(queryString))) {
+                if (window.sessionStorage.getItem(decodeURIComponent(m[1])) !== undefined) {
+                    window.sessionStorage.setItem(decodeURIComponent(m[1]), decodeURIComponent(m[2]))
+                }
+            }
         }
     }
 
