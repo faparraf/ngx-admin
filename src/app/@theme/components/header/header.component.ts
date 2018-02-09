@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { AutenticationService } from '../../../@core/utils/autentication.service';
 
@@ -20,23 +19,25 @@ export class HeaderComponent implements OnInit {
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-    private userService: UserService,
     private analyticsService: AnalyticsService,
     private autenticacion: AutenticationService,
   ) {
   }
 
   ngOnInit() {
-    this.userService.getUsers()
-      .subscribe((users: any) => this.user = users.nick);
     this.autenticacion.init();
-    const urlLogin = this.autenticacion.getAuthorizationUrl();
-    const urlLogout = this.autenticacion.logOut;
-    if (!this.autenticacion.live()) {
-      this.userMenu = [{ title: 'Login', url: urlLogin }];
-    } else {
-      this.userMenu = [{ title: this.autenticacion.payload.user }, { title: 'Log out', url: urlLogout }];
-    }
+  }
+
+  liveToken() {
+    return this.autenticacion.live();
+  }
+
+  login() {
+    location.href = this.autenticacion.getAuthorizationUrl()
+  }
+
+  logout() {
+    location.href = this.autenticacion.getLogoutUrl();
   }
 
   toggleSidebar(): boolean {
