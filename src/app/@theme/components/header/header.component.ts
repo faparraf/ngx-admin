@@ -27,16 +27,19 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsers()
-      .subscribe((users: any) => this.user = users.nick);
     this.autenticacion.init();
-    const urlLogin = this.autenticacion.getAuthorizationUrl();
-    const urlLogout = this.autenticacion.logOut;
-    if (!this.autenticacion.live()) {
-      this.userMenu = [{ title: 'Login', url: urlLogin }];
-    } else {
-      this.userMenu = [{ title: this.autenticacion.payload.user }, { title: 'Log out', url: urlLogout }];
-    }
+  }
+
+  liveToken() {
+    return this.autenticacion.live();
+  }
+
+  login() {
+    location.href = this.autenticacion.getAuthorizationUrl()
+  }
+
+  logout() {
+    location.href = this.autenticacion.getLogoutUrl();
   }
 
   toggleSidebar(): boolean {

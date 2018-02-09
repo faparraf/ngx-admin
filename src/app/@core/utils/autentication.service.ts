@@ -11,6 +11,7 @@ export class AutenticationService {
     private setting_basic: any;
     public payload: any;
     public logOut: any;
+    public tokenHeader: any;
 
     constructor(private http: HttpClient) {
         this.setting_basic = {
@@ -20,7 +21,7 @@ export class AutenticationService {
                     + Config.LOCAL.TOKEN.CLIENT_SECRET),
                 'cache-control': 'no-cache',
             }),
-        }
+        };
         this.logOut = '';
         this.timer();
     }
@@ -28,6 +29,10 @@ export class AutenticationService {
     public post(url, data, header) {
         const body = JSON.stringify(data);
         return this.http.post(url, body, header)
+    }
+
+    public getLogoutUrl(){
+        return this.logOut;
     }
 
     public getToken() {
@@ -48,6 +53,13 @@ export class AutenticationService {
                     }
                     this.session = data;
                     this.setExpiresAt();
+                    this.tokenHeader = {
+                        headers: new HttpHeaders({
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                            'authorization': this.session.id_token,
+                            'cache-control': 'no-cache',
+                        }),
+                    }
                     this.clearUrl();
                 });
         }
@@ -80,8 +92,8 @@ export class AutenticationService {
                 const id_token = window.sessionStorage.getItem('id_token').split('.');
                 this.payload = JSON.parse(atob(id_token[1]));
                 this.logOut = Config.LOCAL.TOKEN.SIGN_OUT_URL;
-                this.logOut += '?id_token_hint=' + window.sessionStorage.getItem('id_token');
-                this.logOut += '&post_logout_redirect_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
+                this.logOut += '?client_id=' +  Config.LOCAL.TOKEN.CLIENTE_ID;
+                this.logOut += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
                 this.logOut += '&state=' + window.sessionStorage.getItem('state');
             }
         }
