@@ -43,6 +43,7 @@
         "@nebular/theme": "2.0.0-rc.4",
         "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.8",
         "@swimlane/ngx-charts": "7.0.1",
+        "amazon-cognito-identity-js": "^1.31.0",
         "angular2-chartjs": "0.4.1",
         "angular2-toaster": "4.0.1",
         "angular2-uuid": "^1.1.1",
@@ -69,6 +70,7 @@
         "rxjs": "5.5.5",
         "sweetalert2": "^7.9.2",
         "tinymce": "4.5.7",
+        "ts-md5": "^1.2.4",
         "typeface-exo": "0.0.22",
         "vis": "^4.21.0",
         "web-animations-js": "2.2.5",
@@ -90,6 +92,7 @@
         "husky": "0.13.3",
         "jasmine-core": "2.6.4",
         "jasmine-spec-reporter": "4.1.1",
+        "json-loader": "^0.5.7",
         "karma": "1.7.1",
         "karma-chrome-launcher": "2.1.1",
         "karma-cli": "1.0.1",
@@ -103,6 +106,7 @@
         "ts-node": "3.2.2",
         "tslint": "5.7.0",
         "tslint-language-service": "0.9.6",
-        "typescript": "2.5.3"
+        "typescript": "2.5.3",
+        "webpack": "^3.10.0"
     }
 }
