@@ -13,12 +13,7 @@ const authData = {
 };
 
 @Injectable()
-export class AmazonService implements OnInit {
-
-    ngOnInit(): void {
-        const curUrl = window.location.href;
-        this.auth.parseCognitoWebResponse(curUrl);
-    }
+export class AmazonService {
 
     auth: CognitoAuth;
 

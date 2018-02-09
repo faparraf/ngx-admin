@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutenticationService } from '../@core/utils/autentication.service';
-import { AmazonService } from '../@core/utils/amazon.service';
-
 
 import {
   NbActionsModule,
@@ -95,8 +93,7 @@ export class ThemeModule {
     return <ModuleWithProviders>{
       ngModule: ThemeModule,
       providers: [...NB_THEME_PROVIDERS,
-        AutenticationService,
-        AmazonService],
+        AutenticationService,],
     };
   }
 }

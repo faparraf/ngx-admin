@@ -4,7 +4,6 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { AutenticationService } from '../../../@core/utils/autentication.service';
-import { AmazonService } from '../../../@core/utils/amazon.service';
 
 
 @Component({
@@ -13,9 +12,6 @@ import { AmazonService } from '../../../@core/utils/amazon.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-
-
-
 
   @Input() position = 'normal';
 
@@ -27,7 +23,6 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private analyticsService: AnalyticsService,
     private autenticacion: AutenticationService,
-    private amazon: AmazonService,
   ) {
   }
 
@@ -42,13 +37,6 @@ export class HeaderComponent implements OnInit {
     } else {
       this.userMenu = [{ title: this.autenticacion.payload.user }, { title: 'Log out', url: urlLogout }];
     }
-  }
-  login() {
-    this.amazon.getSesion();
-  }
-
-  logout() {
-    this.amazon.signOut();
   }
 
   toggleSidebar(): boolean {
