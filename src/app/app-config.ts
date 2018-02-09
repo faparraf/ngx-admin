@@ -8,9 +8,9 @@ export const Config = {
         ASSET: 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/asset/',
     },
     LOCAL: {
-        BASEPATH: 'clustuserpool.auth.us-east-1.amazoncognito.com',
+        BASEPATH: 'https://clustuserpool.auth.us-east-1.amazoncognito.com',
         TOKEN: {
-            AUTORIZATION_URL: 'clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/authorize',
+            AUTORIZATION_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/authorize',
             URL_USER_INFO: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/userinfo',
             CLIENTE_ID: '4hm0vb3nre5frmvdklkclnkmt9',
             CLIENT_SECRET: 'j1b7ov4klfmij1f95lt7anqltb704p8b63hfu6v8faageilir0u',
