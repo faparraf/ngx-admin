@@ -4,6 +4,8 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { AutenticationService } from '../../../@core/utils/autentication.service';
+import { AmazonService } from '../../../@core/utils/amazon.service';
+
 
 @Component({
   selector: 'ngx-header',
@@ -25,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private analyticsService: AnalyticsService,
     private autenticacion: AutenticationService,
+    private amazon: AmazonService,
   ) {
   }
 
@@ -37,8 +40,11 @@ export class HeaderComponent implements OnInit {
     if (!this.autenticacion.live()) {
       this.userMenu = [{ title: 'Login', url: urlLogin }];
     } else {
-      this.userMenu = [{ title: this.autenticacion.payload.sub }, { title: 'Log out', url: urlLogout }];
+      this.userMenu = [{ title: this.autenticacion.payload.user }, { title: 'Log out', url: urlLogout }];
     }
+  }
+  login() {
+    this.amazon.getSesion();
   }
 
   toggleSidebar(): boolean {

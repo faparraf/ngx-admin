@@ -17,19 +17,20 @@ export class AmazonService {
     auth: CognitoAuth;
     constructor() {
         this.auth = new CognitoAuth(authData);
-        this.getSesion();
-        const curUrl = window.location.href;
-        this.auth.parseCognitoWebResponse(curUrl);
+        if (location.search.substring(1) !== '') {
+            const curUrl = window.location.href;
+            this.auth.parseCognitoWebResponse(curUrl);
+        }
     }
 
-    getSesion() {
+    public getSesion() {
         if (window.sessionStorage.getItem('id_token') === null ||
-         window.sessionStorage.getItem('id_token') === undefined) {
+            window.sessionStorage.getItem('id_token') === undefined) {
             this.auth.getSession();
         }
     }
 
-    signOut() {
+    public signOut() {
         this.auth.signOut();
     }
 
