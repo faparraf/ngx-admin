@@ -1,12 +1,12 @@
 const BASEPATH = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/';
-const BASEPATH_PROD = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/production/'
+// const BASEPATH_PROD = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/production/'
 
 export const Config = {
     PROD: {
-        BASEPATH: BASEPATH_PROD,
-        ORGANIZATION: BASEPATH_PROD + 'organization/',
+        BASEPATH: BASEPATH,
+        ORGANIZATION: BASEPATH + 'organization/',
         ASSETS: '/asset',
-        ASSET: 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/asset/',
+        ASSET: BASEPATH + '/asset/',
     },
     LOCAL: {
         BASEPATH: BASEPATH,

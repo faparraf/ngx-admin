@@ -116,10 +116,10 @@ export class AutenticationService {
     }
 
     refresh() {
-        const url = this.params.REFRESH_TOKEN + '?' +
+        const url = Config.LOCAL.TOKEN.REFRESH_TOKEN + '?' +
             'grant_type=' + encodeURIComponent('refresh_token') + '&' +
             'refresh_token=' + encodeURIComponent(window.sessionStorage.getItem('refresh_token')) + '&' +
-            'redirect_uri=' + encodeURIComponent(this.params.REDIRECT_URL);
+            'redirect_uri=' + encodeURIComponent(Config.LOCAL.TOKEN.REDIRECT_URL);
         const dato = {};
 
         this.post(url, dato, this.setting_basic).subscribe(

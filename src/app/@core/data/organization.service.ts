@@ -13,45 +13,21 @@ export class OrganizationService {
             window.sessionStorage.getItem('id_token') !== undefined) {
             this.setting_basic = {
                 headers: new HttpHeaders({
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    'Autorization': window.sessionStorage.getItem('id_token'),
-                    'cache-control': 'no-cache',
+                    'Content-Type': 'application/json',
+                    'Authorization': window.sessionStorage.getItem('id_token'),
                 }),
             };
         } else {
             this.setting_basic = {
                 headers: new HttpHeaders({
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    'cache-control': 'no-cache',
+                    'Content-Type': 'application/json',
                 }),
             };
         }
-
-        this.tree = [{
-            'id': {
-                'S': '6d65e88f-50be-9d05-d975-e90febc1f330',
-            },
-            'name': {
-                'S': 'uno',
-            },
-        }, {
-            'id': {
-                'S': '2c493a54-03e4-ee75-cdd6-dc895869b4e0',
-            },
-            'name': {
-                'S': 'unopuntouno',
-            },
-        }, {
-            'id': {
-                'S': 'bad691a9-bfef-9390-9ff8-1c8b846edc6b',
-            },
-            'name': {
-                'S': 'dos',
-            },
-        }];
     }
     getTree() {
-        return this.tree;
+        return this.http.get(Config.PROD.ORGANIZATION + '27a6200d-c9f2-4483-9469-6fee72e00e05/tree',
+            this.setting_basic);
     }
     get(id) {
         return this.http.get(Config.PROD.ORGANIZATION + id, this.setting_basic);
@@ -61,10 +37,14 @@ export class OrganizationService {
         return this.http.post(Config.PROD.ORGANIZATION, body, this.setting_basic);
     }
     put(element) {
-        const body = JSON.stringify(element);
-        return this.http.put(Config.PROD.ORGANIZATION + element.id, body, this.setting_basic);
+        return this.http.put(Config.PROD.ORGANIZATION + element.id.S, element, this.setting_basic);
     }
     delete(element) {
         return this.http.delete(Config.PROD.ORGANIZATION + element.id);
     }
+    editProcess(element, id) {
+        const body = JSON.stringify(element);
+        return this.http.put(Config.PROD.ORGANIZATION + element.id, body, this.setting_basic);
+    }
 }
+

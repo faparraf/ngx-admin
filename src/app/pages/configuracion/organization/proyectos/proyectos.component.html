@@ -3,17 +3,17 @@
         Proyectos
     </nb-card-header>
     <nb-card-body>
-        <div *ngFor="let project of listProject">
-            <div class="row identado{{level(getText('id',project))}}">
+        <div *ngFor="let project of listProjectAWS">
+            <div class="row identado{{level(project.id)}}">
                 <div *ngIf="project === projectLocal " class="row activo" >
-                    <a class="icon-container" (click)="asign(project)" >
-                        <span><i class="nb-play"></i> {{getText('name',project)}}
+                    <a class="icon-container" (click)="asign(project)">
+                        <span><i class="nb-play"></i> {{project.nombre}}
                         </span>
                     </a>
                 </div>
                 <div *ngIf="project !== projectLocal " class="row" >
                     <a class="icon-container" (click)="asign(project)" >
-                        <span><i class="nb-play"></i> {{getText('name',project)}}
+                        <span><i class="nb-play"></i> {{project.nombre}}
                         </span>
                     </a>
                 </div>
