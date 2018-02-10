@@ -16,10 +16,10 @@
   <nb-action>
     <div class="dropdown ghost-dropdown" ngbDropdown [hidden]="!liveToken()">
       <button class="btn btn-success" type="button" ngbDropdownToggle>
-        <i class="nb-person"></i> Dropdown
+        <i class="nb-person"></i> {{autenticacion.payload.username}}
       </button>
       <ul class="dropdown-menu" ngbDropdownMenu>
-        <li class="dropdown-item">Logout</li>
+        <li class="dropdown-item" (click)="logout()">Logout</li>
       </ul>
     </div>
   </nb-action>

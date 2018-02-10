@@ -11,7 +11,6 @@ export class AutenticationService {
     private setting_basic: any;
     public payload: any;
     public logOut: any;
-    public tokenHeader: any;
 
     constructor(private http: HttpClient) {
         this.setting_basic = {
@@ -23,6 +22,7 @@ export class AutenticationService {
             }),
         };
         this.logOut = '';
+        this.payload = {username:''};
         this.timer();
     }
 
@@ -53,13 +53,6 @@ export class AutenticationService {
                     }
                     this.session = data;
                     this.setExpiresAt();
-                    this.tokenHeader = {
-                        headers: new HttpHeaders({
-                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                            'authorization': this.session.id_token,
-                            'cache-control': 'no-cache',
-                        }),
-                    }
                     this.clearUrl();
                 });
         }
@@ -78,24 +71,20 @@ export class AutenticationService {
         const queryString = location.search.substring(1);
         const regex = /([^&=]+)=([^&]*)/g;
         let m;
-        if (this.logoutValid()) {
-            this.clearUrl();
+
+        while (!!(m = regex.exec(queryString))) {
+            if (window.sessionStorage.getItem(decodeURIComponent(m[1])) !== undefined) {
+                window.sessionStorage.setItem(decodeURIComponent(m[1]), decodeURIComponent(m[2]))
+            }
+        }
+        if (!this.live()) {
+            this.getToken();
         } else {
-            while (!!(m = regex.exec(queryString))) {
-                if (window.sessionStorage.getItem(decodeURIComponent(m[1])) !== undefined) {
-                    window.sessionStorage.setItem(decodeURIComponent(m[1]), decodeURIComponent(m[2]))
-                }
-            }
-            if (!this.live()) {
-                this.getToken();
-            } else {
-                const id_token = window.sessionStorage.getItem('id_token').split('.');
-                this.payload = JSON.parse(atob(id_token[1]));
-                this.logOut = Config.LOCAL.TOKEN.SIGN_OUT_URL;
-                this.logOut += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
-                this.logOut += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
-                this.logOut += '&state=' + window.sessionStorage.getItem('state');
-            }
+            const id_token = window.sessionStorage.getItem('id_token').split('.');
+            this.payload = JSON.parse(atob(id_token[1]));
+            this.logOut = Config.LOCAL.TOKEN.SIGN_OUT_URL;
+            this.logOut += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
+            this.logOut += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
         }
     }
     public live() {
@@ -104,23 +93,6 @@ export class AutenticationService {
         } else {
             return false;
         }
-    }
-    public logoutValid() {
-        let state: any;
-        let valid = true;
-        const queryString = location.search.substring(1);
-        const regex = /([^&=]+)=([^&]*)/g;
-        let m;
-        while (!!(m = regex.exec(queryString))) {
-            state = decodeURIComponent(m[2]);
-        }
-        if (window.sessionStorage.getItem('state') === state) {
-            window.sessionStorage.clear();
-            valid = true;
-        } else {
-            valid = false;
-        }
-        return valid;
     }
 
     public getAuthorizationUrl(): string {

@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
 
   user: any;
-  userMenu: any;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,

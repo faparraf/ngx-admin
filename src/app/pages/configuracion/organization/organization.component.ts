@@ -14,6 +14,7 @@ export class OrganizationComponent {
   public organizationTree: any;
   public org: any;
   public tree: any;
+  public data: any;
 
   public find(array, item) {
     let i = -1, count = 0;
@@ -117,8 +118,15 @@ export class OrganizationComponent {
     this.tree.splice(i - 1, 0, AwsTransformService.getElementAws(this.org));
     this.attrib = [];
   }
+  getOrg() {
+    this.orgService.get(1)
+      .subscribe(res => {
+        this.data = AwsTransformService.getColumnTableArray(res);
+      });
+  }
   constructor(private orgService: OrganizationService) {
     this.tree = this.orgService.getTree();
+    this.getOrg();
     // Read the result field from the JSON response.
     this.organizationTree = AwsTransformService.getJsonTree(this.tree);
     this.attrib = [];
