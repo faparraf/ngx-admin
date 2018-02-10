@@ -22,6 +22,7 @@ export class AutenticationService {
             }),
         };
         this.logOut = '';
+        this.payload = {username:''};
         this.timer();
     }
 

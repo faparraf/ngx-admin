@@ -4,14 +4,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // const attr = require('dynamodb-data-types').AttributeValue;
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Autorization' : window.sessionStorage.getItem('id_token') }),
-};
-
 @Injectable()
 export class OrganizationService {
     public tree: any;
+    public setting_basic: any;
     constructor(private http: HttpClient) {
+        if (window.sessionStorage.getItem('id_token') !== null ||
+            window.sessionStorage.getItem('id_token') !== undefined) {
+            this.setting_basic = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'Autorization': window.sessionStorage.getItem('id_token'),
+                    'cache-control': 'no-cache',
+                }),
+            };
+        } else {
+            this.setting_basic = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'cache-control': 'no-cache',
+                }),
+            };
+        }
+
         this.tree = [{
             'id': {
                 'S': '6d65e88f-50be-9d05-d975-e90febc1f330',
@@ -39,16 +54,15 @@ export class OrganizationService {
         return this.tree;
     }
     get(id) {
-        console.log(this.http.get(Config.PROD.ORGANIZATION + id, httpOptions))
-        return this.http.get(Config.PROD.ORGANIZATION + id, httpOptions);
+        return this.http.get(Config.PROD.ORGANIZATION + id, this.setting_basic);
     }
     post(element) {
         const body = JSON.stringify(element);
-        return this.http.post(Config.PROD.ORGANIZATION, body, httpOptions);
+        return this.http.post(Config.PROD.ORGANIZATION, body, this.setting_basic);
     }
     put(element) {
         const body = JSON.stringify(element);
-        return this.http.put(Config.PROD.ORGANIZATION + element.id, body, httpOptions);
+        return this.http.put(Config.PROD.ORGANIZATION + element.id, body, this.setting_basic);
     }
     delete(element) {
         return this.http.delete(Config.PROD.ORGANIZATION + element.id);

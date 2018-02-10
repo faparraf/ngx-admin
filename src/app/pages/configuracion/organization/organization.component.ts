@@ -122,7 +122,6 @@ export class OrganizationComponent {
     this.orgService.get(1)
       .subscribe(res => {
         this.data = AwsTransformService.getColumnTableArray(res);
-        console.log(this.data);
       });
   }
   constructor(private orgService: OrganizationService) {
