@@ -1,14 +1,16 @@
 const BASEPATH = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/';
+const BASEPATH_PROD = 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/production/'
 
 export const Config = {
     PROD: {
-        BASEPATH: BASEPATH,
-        ORGANIZATION: BASEPATH + 'organization/',
+        BASEPATH: BASEPATH_PROD,
+        ORGANIZATION: BASEPATH_PROD + 'organization/',
         ASSETS: '/asset',
         ASSET: 'https://riopiwbvwh.execute-api.us-east-1.amazonaws.com/Test/asset/',
     },
     LOCAL: {
-        BASEPATH: 'https://clustuserpool.auth.us-east-1.amazoncognito.com',
+        BASEPATH: BASEPATH,
+        ORGANIZATION: BASEPATH + 'organization/',
         TOKEN: {
             AUTORIZATION_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/authorize',
             URL_USER_INFO: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/userinfo',
@@ -21,7 +23,6 @@ export const Config = {
             SIGN_OUT_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oidc/logout',
             SIGN_OUT_REDIRECT_URL: 'https://clust.dijkstra-ing.com/',
             REFRESH_TOKEN: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/token',
-            USER_POOL_ID: 'us-east-1_Z0hXhJBy3',
         },
     },
 };
