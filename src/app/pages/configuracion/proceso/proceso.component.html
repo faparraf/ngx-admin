@@ -10,15 +10,24 @@
                     <div class="col-sm-3">
                         <label for="node" class="form-control-label ">Nuevo Estado</label>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-9">
                         <input type="text " [(ngModel)]="estado" id="node" [ngModelOptions]="{standalone: true} " class="form-control ">
                     </div>
-                    <div class="col-sm-2 center">
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label for="area" class="form-control-label ">Descripción</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <textarea [(ngModel)]="descripcion" id="area" [ngModelOptions]="{standalone: true} " class="form-control "></textarea>
+                    </div>
+                </div>
+                    <div class="center">
                         <a class="btn btn-primary btn-tn" (click)="addNode()" href="#/pages/configuracion/proceso">
                             <i class="ion-plus-round"></i>
                         </a>
                     </div>
-                </div>
+                
             </nb-card-body>
         </nb-card>
         <nb-card>
@@ -85,3 +94,6 @@
         </nb-card>
     </div>
 </div>
+<pre>
+    {{projectAWS | json}}
+</pre>

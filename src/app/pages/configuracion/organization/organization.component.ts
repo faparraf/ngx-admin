@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
 import { UUID } from 'angular2-uuid';
 import { OrganizationService } from '../../../@core/data/organization.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-organization',
@@ -14,7 +15,35 @@ export class OrganizationComponent {
   public organizationTree: any;
   public org: any;
   public tree: any;
-  public data: any;
+  project: any;
+  source: LocalDataSource;
+  data: any;
+  projectAWS: any;
+  settings = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+    },
+    columns: {
+      key: {
+        title: 'Nombre del Campo',
+        type: 'string',
+      },
+      value: {
+        title: 'Título del campo',
+        type: 'string',
+      },
+    },
+  };
 
   public find(array, item) {
     let i = -1, count = 0;
@@ -37,43 +66,6 @@ export class OrganizationComponent {
     });
     return i;
   };
-
-  public deleteAtrrib(atrib) {
-    const i: any = this.find(this.attrib, atrib);
-    this.attrib.splice(i - 1, 1);
-    this.tree.splice(i - 1, 1);
-  }
-
-  public level(id: any) {
-    const level = id.split('.');
-    return level.length;
-  }
-
-  public editOrganization(org: any) {
-    this.org = org;
-  }
-
-  public addAttrib() {
-    if (this.org !== undefined) {
-      this.attrib.push({
-        valor: 'Nuevo atributo',
-        label: 'Nombre atributo',
-        tipo: 'S',
-      })
-    } else {
-      alert('Debe seleccione un proyecto');
-    }
-  }
-
-  public getText(text: string, listOrg: any) {
-    let texto = '';
-    listOrg.forEach(element => {
-      if (element.label === text) {
-        texto = element.valor;
-      }
-    });
-    return texto;
-  }
 
   public addOrganization(org: any) {
     const i: any = this.find(this.organizationTree, org);
@@ -108,27 +100,26 @@ export class OrganizationComponent {
     this.tree.push(newProject);
   }
 
-  public saveAttribs() {
-    const i = this.findId(this.organizationTree, this.org);
-
-    this.org = this.org.concat(this.attrib);
-    this.organizationTree.splice(i - 1, 1);
-    this.organizationTree.splice(i - 1, 0, this.org);
-    this.tree.splice(i - 1, 1);
-    this.tree.splice(i - 1, 0, AwsTransformService.getElementAws(this.org));
-    this.attrib = [];
+  getOrg(event): void {
+    this.projectAWS = event;
+    if (this.projectAWS.Item.info !== undefined) {
+      this.data = AwsTransformService.getColumnTableArray(event.Item.info.L);
+    }
+    this.source = new LocalDataSource(this.data);
   }
-  getOrg() {
-    this.orgService.get(1)
+
+  public guardarInfo() {
+    const data = AwsTransformService.getColumnTableArrayInverse(this.source);
+    this.projectAWS.Item.info = data.fields;
+    this.orgService.put(this.projectAWS.Item)
       .subscribe(res => {
-        this.data = AwsTransformService.getColumnTableArray(res);
       });
   }
+
   constructor(private orgService: OrganizationService) {
-    this.tree = this.orgService.getTree();
-    this.getOrg();
-    // Read the result field from the JSON response.
-    this.organizationTree = AwsTransformService.getJsonTree(this.tree);
-    this.attrib = [];
+    this.data = [];
   }
 }
+
+
+

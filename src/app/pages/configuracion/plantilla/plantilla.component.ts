@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 // import { OrganizationService } from '../../../@core/data/organization.service';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
-import { AssetsService } from '../../../@core/data/assets.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { OrganizationService } from '../../../@core/data/organization.service';
 
 
 @Component({
@@ -14,6 +14,7 @@ export class PlantillaComponent {
   project: any;
   source: LocalDataSource;
   data: any;
+  projectAWS: any;
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -41,21 +42,21 @@ export class PlantillaComponent {
   };
 
   getOrg(event): void {
-    this.project = event;
+    this.projectAWS = event;
+    if (this.projectAWS.Item.info !== undefined) {
+      this.data = AwsTransformService.getColumnTableArray(event.Item.fields.L);
+      }
+    this.source = new LocalDataSource(this.data);
   }
 
-  constructor( private assetsService: AssetsService) {
+  constructor(private orgService: OrganizationService) {
     this.data = [];
-    this.assetsService.getSettings(1)
-      .subscribe(res => {
-        this.data = AwsTransformService.getColumnTableArray(res);
-        this.source = new LocalDataSource(this.data);
-        // console.log(this.data);
-      });
   }
 
   guardarPlantilla(): void {
-    // console.log(this.source);
-    AwsTransformService.getColumnTableArrayInverse(this.source);
+    this.projectAWS.Item.fields = AwsTransformService.getColumnTableArrayInverse(this.source).fields;
+    this.orgService.put(this.projectAWS.Item)
+      .subscribe(res => {
+      });
   }
 }

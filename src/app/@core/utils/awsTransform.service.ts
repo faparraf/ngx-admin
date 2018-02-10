@@ -93,9 +93,9 @@ export class AwsTransformService {
     }
 
     // Array de columnas para smartTable (edición)
-    static getColumnTableArray(org) {
+    static getColumnTableArray(lista) {
         const array = [];
-        org.Item.fields.L.forEach(element => {
+        lista.forEach(element => {
             array.push(attr.unwrap(element.M));
         });
         return array;
@@ -111,11 +111,27 @@ export class AwsTransformService {
         return object;
         // console.log(object);
     }
-
+    // lista AWS a array normal
     static getNormalArray(list) {
         const array = [];
         list.Items.forEach(element => {
             array.push(attr.unwrap(element));
+        });
+        return array;
+    }
+    // lista normal a lista AWS
+    static getIverseArray(list) {
+        const array = [];
+        list.forEach(element => {
+            array.push({ M: attr.wrap(element) });
+        });
+        return array;
+    }
+    // lista AWS a array normal
+    static getNormalArrayProceso(list) {
+        const array = [];
+        list.forEach(element => {
+            array.push(attr.unwrap(element.M));
         });
         return array;
     }

@@ -1,3 +1,39 @@
+
+<div class="row">
+    <div class="col-lg-4">
+      <ngx-proyectos [projectLocal]="project" (getProject)="getOrg($event)"></ngx-proyectos>
+      <nb-card>
+          <nb-card-header>
+              Operaciones
+          </nb-card-header>
+          <nb-card-body>
+              <div class="form-group row center">
+                      <a class="btn btn-primary btn-tn" (click)="guardarInfo()">
+                          Guardar
+                      </a>
+                      <a class="btn btn-primary btn-tn" (click)="addOrganizationEnd()">
+                        <i class="ion-plus-round"></i> Proyecto
+                      </a>
+              </div>
+          </nb-card-body>
+      </nb-card>
+    </div>
+  <div class="col-8">
+      <nb-card>
+          <nb-card-header>
+             Atributos
+          </nb-card-header>
+          <nb-card-body>
+              <ng2-smart-table [settings]="settings" [source]="source">
+              </ng2-smart-table>
+          </nb-card-body>
+      </nb-card>
+  </div>
+
+
+
+
+
 <div class="row">
     <div class="col-6">
         <nb-card>
@@ -67,10 +103,10 @@
                         </div>
                     </div>
                     <div class="center">
-                        <a class="btn btn-primary btn-tn" (click)="addAttrib()" href="#/pages/configuracion/organization">
+                        <a class="btn btn-primary btn-tn" (click)="guardarInfo()" href="#/pages/configuracion/organization">
                             <i class="ion-plus-round"></i>
                         </a>
-                        <a class="btn btn-success btn-tn" (click)="saveAttribs()" href="#/pages/configuracion/organization">
+                        <a class="btn btn-success btn-tn" (click)="guardarInfo()" href="#/pages/configuracion/organization">
                             <i class="ion-checkmark"></i>
                         </a>
                     </div>

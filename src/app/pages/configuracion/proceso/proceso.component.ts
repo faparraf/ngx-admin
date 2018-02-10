@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as Vis from 'vis';
 import { UUID } from 'angular2-uuid';
+import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
+import { OrganizationService } from '../../../@core/data/organization.service';
 
 @Component({
   selector: 'ngx-proceso',
@@ -9,10 +11,13 @@ import { UUID } from 'angular2-uuid';
 })
 export class ProcesoComponent implements OnInit {
   public project: any;
+  public proceso: any;
+  public projectAWS: any;
   public nodes: any[];
   public edges: any[];
   public network: Vis.Network;
   public estado: any;
+  public descripcion: any;
   public desde = { options: '' };
   public hasta = { options: '' };
 
@@ -26,51 +31,93 @@ export class ProcesoComponent implements OnInit {
     return exist;
   }
 
-  constructor() {
+  existNode(node) {
+    let exist = false;
+    this.nodes.forEach(element => {
+      if (element.label === node.label) {
+        exist = true;
+      }
+    });
+    return exist;
+  }
+
+  constructor(private orgService: OrganizationService) {
     this.estado = '';
+    this.descripcion = '';
+  }
+
+  generateNode(label, tag, description) {
+    const node = {
+      id: UUID.UUID(),
+      label: label,
+      tag: tag,
+      descripcion: description,
+    };
+    let inserted = false;
+    if (!this.existNode(node)) {
+      this.nodes.push(node);
+      inserted = true;
+    }
+    return inserted;
+  }
+
+  addInitNodes() {
+    this.generateNode('Inicio', 'start', 'Inicio del proceso');
+    this.generateNode('Fin', 'end', 'Fin del proceso');
+    this.draw();
   }
 
   addNode() {
-    if (this.project === undefined) {
+    if (this.projectAWS === undefined) {
       alert('Seleccione un proyecto');
     } else {
-      if (this.estado !== '') {
-        this.nodes.push({
-          id: UUID.UUID(),
-          label: this.estado,
-        });
-        this.draw();
-        this.estado = '';
+      if (this.estado === '' || this.descripcion === '') {
+        alert('Complete la información del estado');
       } else {
-        alert('Escriba el nombre del Estado');
+        if (this.generateNode(this.estado, 'process', this.descripcion)) {
+          this.draw();
+          this.estado = '';
+          this.descripcion = '';
+        } else {
+          alert('Ya existe un estado con este nombre');
+        }
       }
     }
   }
 
   addEdge() {
-    if (this.desde.options !== '') {
-      if (this.hasta.options !== '') {
-        if (!this.existEdge(this.desde.options, this.hasta.options)) {
-          this.edges.push({
-            from: this.desde.options,
-            to: this.hasta.options,
-          });
-        } else {
-          alert('Ya existe esta arista');
-        }
-        this.draw();
-        this.desde.options = '';
-        this.hasta.options = '';
-      } else {
-        alert('Seleccione estado de destino');
-      }
+    if (this.projectAWS === undefined) {
+      alert('Seleccione un proyecto');
     } else {
-      alert('Seleccione estado de origen');
+      if (this.desde.options !== '') {
+        if (this.hasta.options !== '') {
+          if (!this.existEdge(this.desde.options, this.hasta.options)) {
+            this.edges.push({
+              from: this.desde.options,
+              to: this.hasta.options,
+            });
+          } else {
+            alert('Ya existe esta arista');
+          }
+          this.draw();
+          this.desde.options = '';
+          this.hasta.options = '';
+        } else {
+          alert('Seleccione estado de destino');
+        }
+      } else {
+        alert('Seleccione estado de origen');
+      }
     }
   }
 
   getOrg(event): void {
-    this.project = event;
+    this.projectAWS = event;
+    if (this.projectAWS.Item.process !== undefined) {
+      this.nodes = AwsTransformService.getNormalArrayProceso(this.projectAWS.Item.process.M.nodes.L);
+      this.edges = AwsTransformService.getNormalArrayProceso(this.projectAWS.Item.process.M.edges.L);
+      this.draw();
+    }
   }
 
   ngOnInit() {
@@ -80,10 +127,21 @@ export class ProcesoComponent implements OnInit {
   clear() {
     this.nodes = [];
     this.edges = [];
+    this.addInitNodes();
     this.draw();
   };
 
-  save() { };
+  save() {
+    this.projectAWS.Item.process = {
+      M: {
+        nodes: { L: AwsTransformService.getIverseArray(this.nodes) },
+        edges: { L: AwsTransformService.getIverseArray(this.edges) },
+      },
+    };
+    this.orgService.put(this.projectAWS.Item)
+      .subscribe(res => {
+      });
+  };
 
   draw() {
     const nodesDS = new Vis.DataSet(this.nodes);
@@ -127,7 +185,7 @@ export class ProcesoComponent implements OnInit {
           bindToWindow: true,
         },
         multiselect: false,
-        navigationButtons: false,
+        navigationButtons: true,
         selectable: true,
         selectConnectedEdges: true,
         tooltipDelay: 300,
@@ -140,7 +198,7 @@ export class ProcesoComponent implements OnInit {
           enabled: true,
           levelSeparation: 300,
           nodeSpacing: 150,
-          treeSpacing: 10,
+          treeSpacing: 100,
           blockShifting: false,
           edgeMinimization: true,
           parentCentralization: true,
