@@ -49,7 +49,7 @@ export class PlantillaComponent {
     this.source = new LocalDataSource(this.data);
   }
 
-  constructor( private assetsService: AssetsService, private orgService: OrganizationService) {
+  constructor(private orgService: OrganizationService) {
     this.data = [];
   }
 
