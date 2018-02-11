@@ -28,11 +28,11 @@ export class HeaderComponent implements OnInit {
   }
 
   liveToken() {
-    return this.autenticacion.live();
+      return this.autenticacion.live();
   }
 
   login() {
-    location.href = this.autenticacion.getAuthorizationUrl()
+    location.href = this.autenticacion.getAuthorizationUrl();
   }
 
   logout() {

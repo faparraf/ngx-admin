@@ -47,6 +47,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'General',
         link: '/pages/iteracion/general',
       },
+      {
+        title: 'Iniciar Iteración',
+        link: '/pages/iteracion/inicio',
+      },
+      {
+        title: 'Personal',
+        link: '/pages/iteracion/personal',
+      },
     ],
   },
   {

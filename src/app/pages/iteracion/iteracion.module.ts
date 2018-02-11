@@ -5,6 +5,7 @@ import { IteracionRoutingModule, routedComponents } from './iteracion-routing.mo
 import { ClustService } from '../../@core/data/clust.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+
 @NgModule({
   imports: [
     NgxDatatableModule,

@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AutenticationService } from './@core/utils/autentication.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,4 +34,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
 })
 export class AppModule {
+  constructor(public autenticacion: AutenticationService) {
+    if (!this.autenticacion.live()) {
+      location.href = this.autenticacion.getAuthorizationUrl();
+    }
+  }
 }
