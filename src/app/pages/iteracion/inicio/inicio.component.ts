@@ -12,6 +12,7 @@ export class InicioComponent {
   iniciarIter = 'Iniciar Iteración';
   allColumns: any;
   projectAWS: any;
+  project: any;
   rows: any;
   column: any;
   settings: any;

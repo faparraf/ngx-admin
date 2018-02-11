@@ -15,6 +15,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 })
 
 export class GeneralComponent {
+  project: any;
   allColumns: any;
   projectAWS: any;
   rows: any;
@@ -45,6 +46,10 @@ export class GeneralComponent {
           // this.temp = [...this.rows];
         });
     }
+  }
+
+  cambiarEstado() {
+
   }
 
   onSelect({ selected }) {

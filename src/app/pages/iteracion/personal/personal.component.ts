@@ -17,6 +17,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 export class PersonalComponent {
   allColumns: any;
   projectAWS: any;
+  project: any;
   rows: any;
   column: any;
   settings: any;
@@ -30,6 +31,9 @@ export class PersonalComponent {
     this.rows = [];
     this.columns = [];
     this.selected = [];
+  }
+  cambiarEstado() {
+
   }
 
   getOrg(event): void {
