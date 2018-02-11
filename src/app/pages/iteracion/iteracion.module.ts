@@ -4,6 +4,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { IteracionRoutingModule, routedComponents } from './iteracion-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { OrganizationService } from '../../@core/data/organization.service';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
   ],
   providers: [
     ClustService,
+    OrganizationService,
   ],
 })
 

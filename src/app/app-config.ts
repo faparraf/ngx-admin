@@ -6,6 +6,7 @@ export const Config = {
         BASEPATH: BASEPATH,
         ORGANIZATION: BASEPATH + 'organization/',
         ASSETS: '/asset',
+        INTERATION: BASEPATH + 'iteration',
         ASSET: BASEPATH + '/asset/',
     },
     LOCAL: {

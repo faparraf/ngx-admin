@@ -1,63 +1,91 @@
-<nb-card>
-    <nb-card-body>
-            <input
-            type='text'
-            class='form-control'
-            placeholder='Type to filter the name column...'
-            (keyup)='updateFilter($event)'
-          />
-        <ngx-datatable
-            class="material" 
-            [rows]="rows" 
-            [limit]="10"
-            [columnMode]="'auto'" 
-            [headerHeight]="50" 
-            [rowHeight]="'30'"
-            [footerHeight]="50"
-            [selected]="selected" 
-            [selectionType]="'checkbox'"
-            [sortType]="'multi'"
-            [scrollbarH]="true"
-            (activate)="onActivate($event)"
-            (select)='onSelect($event)'>
-            <ngx-datatable-column 
-                [width]="30" 
-                [sortable]="false" 
-                [canAutoResize]="true" 
-                [draggable]="false" 
-                [resizeable]="false">
-                <ng-template 
-                ngx-datatable-header-template let-value="value" 
-                let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-                    <input type="checkbox" 
-                    [checked]="allRowsSelected" 
-                    (change)="selectFn(!allRowsSelected)" 
-                    />
-                </ng-template>
-                <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                    <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
-                </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column *ngFor="let campo of columns" name="{{campo.field}}"></ngx-datatable-column>
-        </ngx-datatable>
-    </nb-card-body>
-</nb-card>
-
-<nb-card>
-    <nb-card-header>
-        Seleccionados
-    </nb-card-header>
-    <nb-card-body>
-        <div class='selected-column'>
-            <h4>Selections
-                <small>({{selected?.length}})</small>
-            </h4>
-            <ul>
-                <li *ngFor='let sel of selected'>
-                    {{sel.serial}}
-                </li>
-                <li *ngIf="!selected?.length">No Selections</li>
-            </ul>
+<div class="row">
+        <div class="col-md-4">
+            <ngx-proyectos [projectLocal]="project" (getProject)="getOrg($event)"></ngx-proyectos>
         </div>
-    </nb-card-body>
-</nb-card>
+        <div class="col-md-4">
+            <nb-card>
+                <nb-card-body>
+                  Filtro ... <hr>
+                    <input
+                  type='text'
+                  class='form-control'
+                  placeholder='Type to filter the name column...'
+                  (keyup)='updateFilter($event)'
+                />
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-4">
+            <nb-card>
+                <nb-card-header>
+                    Inicializar Iteración <small>({{selected?.length}})</small>
+                </nb-card-header>
+                <nb-card-body class="center">
+                    <button (click)="iniciarIteracion()" class="btn btn-success btn-round btn-with-icon btn-sm"> 
+                        <i class="nb-play"></i> Iniciar iteración
+                    </button>
+                </nb-card-body>
+            </nb-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+            <nb-card>
+                <ngx-datatable
+                    class="material" 
+                    [rows]="rows" 
+                    [limit]="10"
+                    [columnMode]="'force'" 
+                    [headerHeight]="50" 
+                    [rowHeight]="'35'"
+                    [footerHeight]="50"
+                    [selected]="selected" 
+                    [selectionType]="'checkbox'"
+                    [sortType]="'multi'"
+                    [scrollbarH]="true"
+                    (activate)="onActivate($event)"
+                    (select)='onSelect($event)'>
+                    <ngx-datatable-column 
+                        [width]="30" 
+                        [sortable]="false" 
+                        [canAutoResize]="true" 
+                        [draggable]="false" 
+                        [resizeable]="false">
+                        <ng-template 
+                        ngx-datatable-header-template let-value="value" 
+                        let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                            <input type="checkbox" 
+                            [checked]="allRowsSelected" 
+                            (change)="selectFn(!allRowsSelected)" 
+                            />
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                            <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">
+                  </ngx-datatable-column>
+                </ngx-datatable>
+      
+        </nb-card>
+        </div>
+        <div class="col-md-2">
+            <nb-card>
+            <div class='selected-column'>
+                <ol>
+                  <li *ngFor='let col of allColumns'>
+                    <input
+                      type='checkbox'
+                      [id]="col.name"
+                      (click)='toggle(col)'
+                      [checked]='isChecked(col)'
+                    /> <label [attr.for]="col.name">{{col.name}}</label>
+                  </li>
+                </ol>
+              </div>
+            </nb-card>
+        </div>
+      </div>
+      
+      
+      
