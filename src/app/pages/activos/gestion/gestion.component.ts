@@ -18,6 +18,7 @@ export class GestionComponent {
   source: LocalDataSource;
   projectAWS: any;
   data: any;
+  project: any;
   column: any;
   settings = {
     add: {
