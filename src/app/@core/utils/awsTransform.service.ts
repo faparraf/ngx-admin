@@ -150,4 +150,17 @@ export class AwsTransformService {
         });
         return array;
     }
+    // lista AWS a array normal
+    static clearAWS(item) {
+        let array = '{'
+        for (const i in item) {
+            if (item.hasOwnProperty(i)) {
+                if (item[i].S !== '') {
+                    array += '"' + i + '":' + JSON.stringify(item[i]) + ',';
+                }
+            }
+        }
+        array = array.substring(0, array.length - 1) + '}';
+        return JSON.parse(array);
+    }
 }

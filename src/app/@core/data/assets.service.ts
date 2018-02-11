@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Config } from './../../app-config'
+import { AwsTransformService } from '../utils/awsTransform.service';
 const attr = require('dynamodb-data-types').AttributeValue;
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Accept': 'application/json' }),
 };
-httpOptions.headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-httpOptions.headers.append('Access-Control-Allow-Headers', 'Content-Type');
 
 const path = Config.PROD.BASEPATH;
-
 
 @Injectable()
 export class AssetsService {
 
     constructor(private http: HttpClient) {
+        if (window.sessionStorage.getItem('id_token') !== null ||
+        window.sessionStorage.getItem('id_token') !== undefined) {
+        httpOptions.headers.append('Authorization', window.sessionStorage.getItem('id_token'));
+        }
     }
 
     getAssets(org) {
@@ -30,7 +32,8 @@ export class AssetsService {
         return this.http.get(path + endpoint);
     }
     EditAsset(element) {
-        const body = attr.wrap(element);
+        let body = attr.wrap(element);
+        body = AwsTransformService.clearAWS(body);
         return this.http.put(Config.PROD.ASSET + element.serial, body, httpOptions);
     }
     addAsset(element) {

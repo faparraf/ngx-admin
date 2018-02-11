@@ -19,63 +19,61 @@ export class GestionComponent {
   projectAWS: any;
   data: any;
   column: any;
-  settings: any;
-
+  settings = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
+    columns:{},
+  }
 
   constructor(private assetsService: AssetsService) {
     this.data = [];
-    this.settings = {
-      add: {
-        addButtonContent: '<i class="nb-plus"></i>',
-        createButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmCreate: true,
-      },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="nb-checkmark"></i>',
-        cancelButtonContent: '<i class="nb-close"></i>',
-        confirmSave: true,
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true,
-      },
-    };
-    this.assetsService.getAssets(1)
-      .subscribe(res => {
-        this.data = AwsTransformService.getNormalArray(res);
-      });
-    this.assetsService.getSettings(1)
-      .subscribe(res => {
-        this.settings = {
-          add: {
-            addButtonContent: '<i class="nb-plus"></i>',
-            createButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>',
-            confirmCreate: true,
-          },
-          edit: {
-            editButtonContent: '<i class="nb-edit"></i>',
-            saveButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>',
-            confirmSave: true,
-          },
-          delete: {
-            deleteButtonContent: '<i class="nb-trash"></i>',
-            confirmDelete: true,
-          },
-          columns: AwsTransformService.getColumnTable(res),
-        };
-      });
   }
 
   getOrg(event): void {
     this.projectAWS = event;
-    if (this.projectAWS.Item.info !== undefined) {
-      this.data = AwsTransformService.getColumnTableArray(event.Item.fields.L);
-      }
-    this.source = new LocalDataSource(this.data);
+    if (this.projectAWS.Item.id !== undefined) {
+      this.assetsService.getAssets(this.projectAWS.Item.id.S)
+        .subscribe(res => {
+          this.data = AwsTransformService.getNormalArray(res);
+          this.source = new LocalDataSource(this.data);
+        });
+      this.assetsService.getSettings(this.projectAWS.Item.id.S)
+        .subscribe(res => {
+          this.settings = {
+            add: {
+              addButtonContent: '<i class="nb-plus"></i>',
+              createButtonContent: '<i class="nb-checkmark"></i>',
+              cancelButtonContent: '<i class="nb-close"></i>',
+              confirmCreate: true,
+            },
+            edit: {
+              editButtonContent: '<i class="nb-edit"></i>',
+              saveButtonContent: '<i class="nb-checkmark"></i>',
+              cancelButtonContent: '<i class="nb-close"></i>',
+              confirmSave: true,
+            },
+            delete: {
+              deleteButtonContent: '<i class="nb-trash"></i>',
+              confirmDelete: true,
+            },
+            columns: AwsTransformService.getColumnTable(res),
+          };
+        });
+    }
   }
 
   onCreateConfirm(event): void {

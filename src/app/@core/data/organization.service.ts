@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // const attr = require('dynamodb-data-types').AttributeValue;
 
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 @Injectable()
 export class OrganizationService {
     public tree: any;
@@ -11,18 +14,7 @@ export class OrganizationService {
     constructor(private http: HttpClient) {
         if (window.sessionStorage.getItem('id_token') !== null ||
             window.sessionStorage.getItem('id_token') !== undefined) {
-            this.setting_basic = {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                    'Authorization': window.sessionStorage.getItem('id_token'),
-                }),
-            };
-        } else {
-            this.setting_basic = {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                }),
-            };
+            httpOptions.headers.append('Authorization', window.sessionStorage.getItem('id_token'));
         }
     }
     getTree() {
