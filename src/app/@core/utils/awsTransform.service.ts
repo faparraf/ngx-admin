@@ -82,11 +82,26 @@ export class AwsTransformService {
         return '"' + element.M.field.S + '":{"title": "' + element.M.label.S + '"}';
     }
 
+    // Elemento de columnas para ngx (assets)
+    static getElementColumnTableNgx(element) {
+        return '"' + name + '":"' + element.M.label.S + '"';
+    }
+
     // Array de columnas para smartTable (assets)
     static getColumnTable(org) {
         let array = '{';
         org.Item.fields.L.forEach(element => {
             array += AwsTransformService.getElementColumnTable(element) + ',';
+        });
+        array = array.substring(0, array.length - 1) + '}';
+        return JSON.parse(array);
+    }
+
+    // Array de columnas para ngx-table (assets)
+    static getColumnTableNgx(org) {
+        let array = '{';
+        org.Item.fields.L.forEach(element => {
+            array += AwsTransformService.getElementColumnTableNgx(element) + ',';
         });
         array = array.substring(0, array.length - 1) + '}';
         return JSON.parse(array);

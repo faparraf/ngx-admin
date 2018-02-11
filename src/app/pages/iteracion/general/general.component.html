@@ -1,3 +1,64 @@
-<p>
-  general works!
-</p>
+<nb-card>
+    <nb-card-body>
+            <input
+            type='text'
+            class='form-control'
+            placeholder='Type to filter the name column...'
+            (keyup)='updateFilter($event)'
+          />
+        <ngx-datatable
+            class="material" 
+            [rows]="rows" 
+            [limit]="7"
+            [columnMode]="'auto'" 
+            [headerHeight]="50" 
+            [rowHeight]="'50'"
+            [footerHeight]="50"
+            [rowHeight]="'30'"
+            [selected]="selected" 
+            [selectionType]="'checkbox'"
+            [sortType]="'multi'"
+            [scrollbarH]="true"
+            (activate)="onActivate($event)"
+            (select)='onSelect($event)'>
+            <ngx-datatable-column 
+                [width]="30" 
+                [sortable]="false" 
+                [canAutoResize]="true" 
+                [draggable]="false" 
+                [resizeable]="false">
+                <ng-template 
+                ngx-datatable-header-template let-value="value" 
+                let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                    <input type="checkbox" 
+                    [checked]="allRowsSelected" 
+                    (change)="selectFn(!allRowsSelected)" 
+                    />
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                    <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column *ngFor="let campo of columns" name="{{campo.label}}"[width]="150"></ngx-datatable-column>
+        </ngx-datatable>
+    </nb-card-body>
+</nb-card>
+
+<nb-card>
+    <nb-card-header>
+        Seleccionados
+    </nb-card-header>
+    <nb-card-body>
+        <div class='selected-column'>
+            <h4>Selections
+                <small>({{selected?.length}})</small>
+            </h4>
+            <ul>
+                <li *ngFor='let sel of selected'>
+                    {{sel.serial}}
+                </li>
+                <li *ngIf="!selected?.length">No Selections</li>
+            </ul>
+        </div>
+    </nb-card-body>
+</nb-card>
