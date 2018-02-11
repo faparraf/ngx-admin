@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AssetsService } from '../../../@core/data/assets.service';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-gestion',
@@ -14,6 +15,8 @@ import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
 })
 
 export class GestionComponent {
+  source: LocalDataSource;
+  projectAWS: any;
   data: any;
   column: any;
   settings: any;
@@ -65,6 +68,14 @@ export class GestionComponent {
           columns: AwsTransformService.getColumnTable(res),
         };
       });
+  }
+
+  getOrg(event): void {
+    this.projectAWS = event;
+    if (this.projectAWS.Item.info !== undefined) {
+      this.data = AwsTransformService.getColumnTableArray(event.Item.fields.L);
+      }
+    this.source = new LocalDataSource(this.data);
   }
 
   onCreateConfirm(event): void {

@@ -9,12 +9,11 @@
         <ngx-datatable
             class="material" 
             [rows]="rows" 
-            [limit]="7"
+            [limit]="10"
             [columnMode]="'auto'" 
             [headerHeight]="50" 
-            [rowHeight]="'50'"
-            [footerHeight]="50"
             [rowHeight]="'30'"
+            [footerHeight]="50"
             [selected]="selected" 
             [selectionType]="'checkbox'"
             [sortType]="'multi'"
@@ -39,7 +38,7 @@
                     <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column *ngFor="let campo of columns" name="{{campo.label}}"[width]="150"></ngx-datatable-column>
+            <ngx-datatable-column *ngFor="let campo of columns" name="{{campo.field}}"></ngx-datatable-column>
         </ngx-datatable>
     </nb-card-body>
 </nb-card>

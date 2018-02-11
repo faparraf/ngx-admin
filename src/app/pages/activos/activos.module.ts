@@ -3,6 +3,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ActivosRoutingModule, routedComponents } from './activos-routing.module';
 import { AssetsService } from '../../@core/data/assets.service';
+import { OrganizationService } from '../../@core/data/organization.service';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { AssetsService } from '../../@core/data/assets.service';
   ],
   providers: [
     AssetsService,
+    OrganizationService,
   ],
 })
 
