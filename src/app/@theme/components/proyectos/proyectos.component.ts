@@ -5,14 +5,11 @@ import { OrganizationService } from '../../../@core/data/organization.service';
   selector: 'ngx-proyectos',
   template: `
   <nb-card>
-    <nb-card-header>
-        Proyectos
-    </nb-card-header>
     <nb-card-body>
         <div *ngFor="let project of listProjectAWS">
             <div class="row identado{{level(project.id)}}">
                 <div *ngIf="project === projectLocal " class="row activo" >
-                    <a class="icon-container" (click)="asign(project)">
+                    <a class="icon-container">
                         <span><i class="nb-play"></i> {{project.nombre}}
                         </span>
                     </a>

@@ -1,90 +1,101 @@
 <div class="row">
-  <div class="col-md-4">
-      <ngx-proyectos [projectLocal]="project" (getProject)="getOrg($event)"></ngx-proyectos>
-  </div>
-  <div class="col-md-4">
-      <nb-card>
-          <nb-card-body>
-            Filtro ... <hr>
-              <input
-            type='text'
-            class='form-control'
-            placeholder='Type to filter the name column...'
-            (keyup)='updateFilter($event)'
-          />
-          </nb-card-body>
-      </nb-card>
-  </div>
-  <div class="col-md-4">
-      <nb-card>
-          <nb-card-header>
-              Inicializar Iteración <small>({{selected?.length}})</small>
-          </nb-card-header>
-          <nb-card-body class="center">
-              <button (click)="iniciarIteracion()" class="btn btn-success btn-round btn-with-icon btn-sm"> 
-                  <i class="nb-play"></i> {{iniciarIter}}
-              </button>
-          </nb-card-body>
-      </nb-card>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-10">
-      <nb-card>
-          <ngx-datatable
-              class="material" 
-              [rows]="rows" 
-              [limit]="10"
-              [columnMode]="'auto'" 
-              [headerHeight]="50" 
-              [rowHeight]="'35'"
-              [footerHeight]="50"
-              [selected]="selected" 
-              [selectionType]="'checkbox'"
-              [sortType]="'multi'"
-              [scrollbarH]="true"
-              (activate)="onActivate($event)"
-              (select)='onSelect($event)'>
-              <ngx-datatable-column 
-                  [width]="30" 
-                  [sortable]="false" 
-                  [canAutoResize]="true" 
-                  [draggable]="false" 
-                  [resizeable]="false">
-                  <ng-template 
-                  ngx-datatable-header-template let-value="value" 
-                  let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-                      <input type="checkbox" 
-                      [checked]="allRowsSelected" 
-                      (change)="selectFn(!allRowsSelected)" 
-                      />
-                  </ng-template>
-                  <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                      <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
-                  </ng-template>
-              </ngx-datatable-column>
-              <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">
-            </ngx-datatable-column>
-          </ngx-datatable>
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <nb-tabset>
+                <nb-tab tabTitle="Selección">
+                    <div class="row container">
+                        <div class="col-md-3">
+                            <br>
+                            <ngx-proyectos [projectLocal]="project" (getProject)="getOrg($event)"></ngx-proyectos>
+                            <div class="card">
+                                <input type='text' class='form-control' [(ngModel)]="filtro" placeholder='Filtro de Registros' (keyup)='updateFilter($event)' />
+                            </div>
+                            <div class="card">
+                                <button type="button" class="btn btn-outline-primary btn-sm" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                                    aria-controls="collapseExample">
+                                    Columnas
+                                </button>
+                            </div>
+                            <div class="card" *ngIf="iteracionRows.length === 0">
+                                    <button type="button" class="btn btn-outline-success btn-sm" (click)="seleccionAIterar()">
+                                        Añadir a selección
+                                    </button>
+                                </div>
+                            <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ol>
+                                            <li *ngFor='let col of allColumns'>
+                                                <input type='checkbox' [id]="col.name" (click)='toggle(col)' [checked]='isChecked(col)' />
+                                                <label [attr.for]="col.name">
+                                                    <small>{{col.name}}</small>
+                                                </label>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
 
-  </nb-card>
-  </div>
-  <div class="col-md-2">
-      <nb-card>
-      <div class='selected-column'>
-          <ol>
-            <li *ngFor='let col of allColumns'>
-              <input
-                type='checkbox'
-                [id]="col.name"
-                (click)='toggle(col)'
-                [checked]='isChecked(col)'
-              /> <label [attr.for]="col.name">{{col.name}}</label>
-            </li>
-          </ol>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card">
+                                <ngx-datatable 
+                                #seleccion
+                                class="material" 
+                                [trackByProp]="'id'" 
+                                [rows]="rows" 
+                                [limit]="10" 
+                                [columnMode]="'auto'" 
+                                [headerHeight]="50" 
+                                [rowHeight]="'35'" 
+                                [footerHeight]="50"
+                                [selected]="selected" 
+                                [selectionType]="'checkbox'" 
+                                [sortType]="'multi'" 
+                                [scrollbarH]="true"
+                                (activate)="onActivate($event)" 
+                                (select)='onSelect($event)'>
+                                    <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false">
+                                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                                            <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                            <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column *ngFor="let col of columns" [name]="col.name" prop="{{col.prop}}">
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Iniciar Iteración">
+                        <div class="col-md-12">
+                                <div class="card">
+                                    <ngx-datatable class="material" 
+                                    #iteracion
+                                    [rows]="iteracionRows" 
+                                    [limit]="10" 
+                                    [trackByProp]="'id'" 
+                                    [columnMode]="'auto'" 
+                                    [headerHeight]="50" 
+                                    [rowHeight]="'35'" 
+                                    [footerHeight]="50"
+                                    [sortType]="'multi'" 
+                                    [scrollbarH]="true"
+                                    [columns]="columnsIteracion">
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        <div class="card" *ngIf="iteracionRows.length !== 0">
+                                <button (click)="iniciarIteracion()" class="btn btn-success btn-sm">
+                                    <i class="nb-play"></i> {{iniciarIter}}
+                                    <small>({{iteracionRows?.length}})</small>
+                                </button>
+                            </div>
+                </nb-tab>
+            </nb-tabset>
         </div>
-      </nb-card>
-  </div>
+    </div>
 </div>
-
-
