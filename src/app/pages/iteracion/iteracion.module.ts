@@ -5,6 +5,7 @@ import { IteracionRoutingModule, routedComponents } from './iteracion-routing.mo
 import { ClustService } from '../../@core/data/clust.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { OrganizationService } from '../../@core/data/organization.service';
+import { SeleccionInicioComponent } from './inicio/seleccion-inicio/seleccion-inicio.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { OrganizationService } from '../../@core/data/organization.service';
   ],
   declarations: [
     ...routedComponents,
+    SeleccionInicioComponent,
   ],
   providers: [
     ClustService,
