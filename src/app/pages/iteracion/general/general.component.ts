@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AssetsService } from '../../../@core/data/assets.service';
-import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
+// import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
@@ -15,6 +15,9 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 })
 
 export class GeneralComponent {
+  project: any;
+  allColumns: any;
+  projectAWS: any;
   rows: any;
   column: any;
   settings: any;
@@ -22,26 +25,53 @@ export class GeneralComponent {
   selected: any;
   orgAWS: any;
   temp: any;
+
   @ViewChild(DatatableComponent) table: DatatableComponent;
   constructor(private assetsService: AssetsService) {
     this.rows = [];
-    this.columns = [{ prop: 'field' }];
+    this.columns = [];
     this.selected = [];
-    this.assetsService.getAssets(1)
-      .subscribe(res => {
-        this.rows = AwsTransformService.getNormalArray(res);
-        this.temp = [...this.rows];
-      });
-    this.assetsService.getSettings(1)
-      .subscribe(res => {
-        this.orgAWS = res;
-        this.columns = AwsTransformService.getNormalArrayProceso(this.orgAWS.Item.fields.L);
-      });
+  }
+
+  getOrg(event): void {
+    this.projectAWS = event;
+    this.columns = [{ name: 'asset' }, { name: 'estado' }, { name: 'fecha' },
+    { name: 'id' }, { name: 'organization' }, { name: 'usuario_responsable', prop: 'usuario_responsable' }];
+    this.allColumns = [{ name: 'asset' }, { name: 'estado' }, { name: 'fecha' },
+    { name: 'id' }, { name: 'organization' }, { name: 'usuario_responsable', prop: 'usuario_responsable' }];
+    if (this.projectAWS.Item.id !== undefined) {
+      this.assetsService.getAssets(this.projectAWS.Item.id.S)
+        .subscribe(res => {
+          // this.rows = AwsTransformService.getNormalArray(res);
+          // this.temp = [...this.rows];
+        });
+    }
+  }
+
+  cambiarEstado() {
+
   }
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
+  }
+  toggle(col) {
+    const isChecked = this.isChecked(col);
+
+    if (isChecked) {
+      this.columns = this.columns.filter(c => {
+        return c.name !== col.name;
+      });
+    } else {
+      this.columns = [...this.columns, col];
+    }
+  }
+
+  isChecked(col) {
+    return this.columns.find(c => {
+      return c.name === col.name;
+    });
   }
 
   onActivate(event) {
@@ -63,9 +93,9 @@ export class GeneralComponent {
     const val = event.target.value.toLowerCase();
     // filter our data
     const temp = this.temp.filter(function (d) {
-      return d.serial.toLowerCase().indexOf(val) !== -1 ||
-        d.ciudad.toLowerCase().indexOf(val) !== -1 ||
-        d.direccion.toLowerCase().indexOf(val) !== -1 ||
+      return d.estado.toLowerCase().indexOf(val) !== -1 ||
+        d.id.toLowerCase().indexOf(val) !== -1 ||
+        d.fecha.toLowerCase().indexOf(val) !== -1 ||
         !val;
     });
 

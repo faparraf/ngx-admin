@@ -84,7 +84,7 @@ export class AwsTransformService {
 
     // Elemento de columnas para ngx (assets)
     static getElementColumnTableNgx(element) {
-        return '"' + name + '":"' + element.M.label.S + '"';
+        return '{"name":"' + element.M.label.S + '","prop":"' + element.M.field.S + '"}';
     }
 
     // Array de columnas para smartTable (assets)
@@ -99,11 +99,12 @@ export class AwsTransformService {
 
     // Array de columnas para ngx-table (assets)
     static getColumnTableNgx(org) {
-        let array = '{';
+        let array = '[';
         org.Item.fields.L.forEach(element => {
             array += AwsTransformService.getElementColumnTableNgx(element) + ',';
         });
-        array = array.substring(0, array.length - 1) + '}';
+        array = array.substring(0, array.length - 1) + ']';
+        // console.log(array);
         return JSON.parse(array);
     }
 

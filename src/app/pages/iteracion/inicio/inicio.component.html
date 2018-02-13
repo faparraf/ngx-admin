@@ -1,3 +1,27 @@
-<p>
-  inicio works!
-</p>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <nb-tabset>
+                <nb-tab tabTitle="Selección">
+                    <ngx-seleccion-inicio (rowsSelected)="rowsSelectedData($event)" (columnsGlobal)="columnsGlobalData($event)"></ngx-seleccion-inicio>
+                </nb-tab>
+                <nb-tab tabTitle="{{iniciarIter}}">
+                    <nb-card>
+                        <nb-card-body>
+                            <ng2-smart-table [settings]="settings" [source]="data">
+                            </ng2-smart-table>
+                        </nb-card-body>
+                    </nb-card>
+                    <nb-card>
+                    <nb-card-body>
+                        <button (click)="iniciarIteracion()" class="btn btn-success btn-sm">
+                            <i class="nb-play"></i> {{iniciarIter}}
+                            <small>({{data?.length}})</small>
+                        </button>
+                    </nb-card-body>
+                </nb-card>
+                </nb-tab>
+            </nb-tabset>
+        </div>
+    </div>
+</div>
