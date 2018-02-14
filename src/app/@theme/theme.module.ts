@@ -26,6 +26,7 @@ import {
   ThemeSwitcherComponent,
   TinyMCEComponent,
   ProyectosComponent,
+  DinamicformComponent,
 } from './components';
 import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
 import {
@@ -65,6 +66,7 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  DinamicformComponent,
 ];
 
 const PIPES = [
