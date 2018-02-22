@@ -28,11 +28,11 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </nb-tab>
                 <nb-tab tabTitle="Selección de Iteraciones">
+                    <ngx-datafilter [filterColumns]="columnsIteracion" [columns]="columnsIteracion" [rows]="iteraciones" [temp]="iteraciones"></ngx-datafilter>
                 </nb-tab>
                 <nb-tab tabTitle="Clusterización">
                     <nb-card>

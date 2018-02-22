@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutenticationService } from '../@core/utils/autentication.service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import {
   NbActionsModule,
@@ -27,6 +28,7 @@ import {
   TinyMCEComponent,
   ProyectosComponent,
   DinamicformComponent,
+  DatafilterComponent,
 } from './components';
 import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
 import {
@@ -67,6 +69,7 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
   DinamicformComponent,
+  DatafilterComponent,
 ];
 
 const PIPES = [
@@ -88,7 +91,7 @@ const NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES],
+  imports: [...BASE_MODULES, ...NB_MODULES, NgxDatatableModule],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
   declarations: [...COMPONENTS, ...PIPES],
 })

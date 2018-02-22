@@ -9,10 +9,12 @@ import { ClustService } from '../../../@core/data/clust.service';
   styleUrls: ['./agrupamiento.component.scss'],
 })
 export class AgrupamientoComponent {
+  iteraciones: any;
   filtro1: any;
   filtro2: any;
   columns2: any;
   columns1: any;
+  columnsIteracion: any;
   isCollapsed = true;
   org: any;
   settings: any;
@@ -46,7 +48,11 @@ export class AgrupamientoComponent {
     campos: [],
   };
   constructor(private assetsService: AssetsService,
-              private clustService: ClustService) { }
+    private clustService: ClustService) {
+    this.filtro1 = { data: {} };
+    this.filtro2 = { data: {} };
+
+  }
 
   getToFilter(items) {
     const array = []
@@ -55,7 +61,7 @@ export class AgrupamientoComponent {
           if (items[i].S !== '') {
             const obj = {
               campo: i,
-              funcion: 'ne',
+              funcion: 'eq',
               valor: items[i]
             }
             array.push(obj);
@@ -74,17 +80,23 @@ export class AgrupamientoComponent {
   }
 
   filtrar() {
-    console.log(this.org);
     this.filtro1.data.organization = this.org.Item.id.S;
     this.filtro2.data.organization = this.org.Item.id.S;
+
     const filtroFinal = {
-      filtro_iteracion: this.getToFilter(this.filtro1.data),
-      filtro_assets: this.getToFilter(this.filtro2.data),
+      filtro_iteracion: [],
+      filtro_asset: [],
     };
+    filtroFinal.filtro_iteracion = this.getToFilter(this.filtro1.data);
+    filtroFinal.filtro_asset = this.getToFilter(this.filtro2.data);
     this.clustService.getCompose(filtroFinal)
-    .subscribe(res => {
-      console.log(res);
-    });
+      .subscribe(res => {
+        console.log(filtroFinal);
+        const a = JSON.parse(JSON.stringify(res));
+        this.iteraciones = JSON.parse(a);
+        this.columnsIteracion = AwsTransformService.getColumnsNgxByData(this.iteraciones[0]);
+        console.log(this.columnsIteracion);
+      });
   }
 
   getOrg(event): void {

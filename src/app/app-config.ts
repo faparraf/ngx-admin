@@ -8,12 +8,12 @@ export const Config = {
         ASSETS: '/asset',
         INTERATION: BASEPATH + 'iteration',
         ASSET: BASEPATH + '/asset/',
-        ASSET_ITERACION: BASEPATH + 'iteration/getcompose',
+        ASSET_ITERACION: BASEPATH + 'iteration/getmerge',
     },
     LOCAL: {
         BASEPATH: BASEPATH,
         ORGANIZATION: BASEPATH + 'organization/',
-        ASSET_ITERACION: BASEPATH + 'iteration/getcompose',
+        ASSET_ITERACION: BASEPATH + 'iteration/getmerge',
         TOKEN: {
             AUTORIZATION_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/authorize',
             URL_USER_INFO: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/userinfo',
