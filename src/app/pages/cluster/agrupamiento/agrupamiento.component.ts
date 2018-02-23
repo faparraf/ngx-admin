@@ -18,6 +18,21 @@ export class AgrupamientoComponent {
   isCollapsed = true;
   org: any;
   settings: any;
+  segundoParametro: any;
+  primerParametro: any;
+  iniciarClust = 'Iniciar Clusterización'
+  settingsCluster = {
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    pager: {
+      perPage: 7,
+    },
+    columns: {},
+  }
+  clusterData: any;
 
   myform1 = {
     clase: 'col-9',
@@ -51,6 +66,7 @@ export class AgrupamientoComponent {
     private clustService: ClustService) {
     this.filtro1 = { data: {} };
     this.filtro2 = { data: {} };
+    this.clusterData = [];
 
   }
 
@@ -62,7 +78,7 @@ export class AgrupamientoComponent {
             const obj = {
               campo: i,
               funcion: 'eq',
-              valor: items[i]
+              valor: items[i],
             }
             array.push(obj);
           }
@@ -91,12 +107,33 @@ export class AgrupamientoComponent {
     filtroFinal.filtro_asset = this.getToFilter(this.filtro2.data);
     this.clustService.getCompose(filtroFinal)
       .subscribe(res => {
-        console.log(filtroFinal);
+        // console.log(filtroFinal);
         const a = JSON.parse(JSON.stringify(res));
         this.iteraciones = JSON.parse(a);
         this.columnsIteracion = AwsTransformService.getColumnsNgxByData(this.iteraciones[0]);
-        console.log(this.columnsIteracion);
+        // console.log(this.columnsIteracion);
       });
+  }
+
+  clusterizar() {
+    // console.log('primer', this.primerParametro);
+    // console.log('segundo', this.segundoParametro);
+    this.iniciarClust = 'Clusterizando ...'
+  }
+
+  getDataFilter(event) {
+    this.clusterData = [...event];
+    this.settingsCluster = {
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+      },
+      pager: {
+        perPage: 7,
+      },
+      columns: AwsTransformService.getColumnsSmartByData(this.clusterData[0]),
+    }
   }
 
   getOrg(event): void {

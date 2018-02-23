@@ -4,7 +4,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 @Component({
   selector: 'ngx-datafilter',
   templateUrl: './datafilter.component.html',
-  styleUrls: ['./datafilter.component.scss']
+  styleUrls: ['./datafilter.component.scss'],
 })
 export class DatafilterComponent implements OnInit {
   iteracionRows: any;
@@ -21,7 +21,7 @@ export class DatafilterComponent implements OnInit {
     this.rows = [];
     this.selected = [];
     this.iteracionRows = [];
-   }
+  }
 
   ngOnInit() {
   }
@@ -31,7 +31,7 @@ export class DatafilterComponent implements OnInit {
     let count = 0;
     array.forEach(element => {
       count++;
-      if (element.id === item.id) {
+      if (element.asset === item.asset) {
         ids.push(count);
       }
     });
@@ -103,6 +103,7 @@ export class DatafilterComponent implements OnInit {
         d.ciudad.toLowerCase().indexOf(val) !== -1 ||
         d.direccion.toLowerCase().indexOf(val) !== -1 ||
         d.seccional.toLowerCase().indexOf(val) !== -1 ||
+        d.tipo_prio.toLowerCase().indexOf(val) !== -1 ||
         !val;
     });
 

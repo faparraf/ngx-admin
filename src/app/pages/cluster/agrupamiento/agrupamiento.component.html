@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
-        <div class="card">
+        <nb-card>
             <nb-tabset>
                 <nb-tab tabTitle="Filtro">
                     <div class="row justify-content-center">
@@ -8,49 +8,70 @@
                             <ngx-proyectos (getProject)="getOrg($event)"></ngx-proyectos>
                             <ngx-dinamicform [normalform]="myform1" (result)="getFiltro1($event)"></ngx-dinamicform>
                             <div class="row justify-content-center">
-                                <div class="card">
+                                <nb-card>
                                     <button type="button" class="btn btn-primary btn-sm" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
                                         aria-controls="collapseExample">
                                         <label [hidden]="!isCollapsed"> Mostrar todos los filtros</label>
                                         <label [hidden]="isCollapsed"> Ocultar filtros</label>
                                     </button>
-                                </div>
-                                <div class="card">
+                                </nb-card>
+                                <nb-card>
                                     <button type="button" class="btn btn-success btn-sm" (click)="filtrar()">
                                         <label> Filtrar </label>
                                     </button>
-                                </div>
+                                </nb-card>
                             </div>
                             <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                                <div class="card">
+                                <nb-card>
                                     <div class="card-body">
                                         <ngx-dinamicform [normalform]="myform2" (result)="getFiltro2($event)"></ngx-dinamicform>
                                     </div>
-                                </div>
+                                </nb-card>
                             </div>
                         </div>
                     </div>
                 </nb-tab>
                 <nb-tab tabTitle="Selección de Iteraciones">
-                    <ngx-datafilter [filterColumns]="columnsIteracion" [columns]="columnsIteracion" [rows]="iteraciones" [temp]="iteraciones"></ngx-datafilter>
+                    <ngx-datafilter (selectedData)="getDataFilter($event)" [filterColumns]="columnsIteracion" [columns]="columnsIteracion" [rows]="iteraciones"
+                        [temp]="iteraciones"></ngx-datafilter>
                 </nb-tab>
                 <nb-tab tabTitle="Clusterización">
                     <nb-card>
                         <nb-card-body>
-                            <ng2-smart-table [settings]="settings" [source]="data">
+                            <ng2-smart-table [settings]="settingsCluster" [source]="clusterData">
                             </ng2-smart-table>
                         </nb-card-body>
                     </nb-card>
-                    <nb-card>
-                        <nb-card-body>
-                            <button (click)="iniciarIteracion()" class="btn btn-success btn-sm">
-                                <i class="nb-play"></i> {{iniciarIter}}
-                                <small>({{data?.length}})</small>
-                            </button>
-                        </nb-card-body>
-                    </nb-card>
+                    <div class="row">
+                        <label for="x" class="col-2 form-control-label">
+                            <small>Primer Parámetro</small>
+                        </label>
+                        <div class="col-2">
+                            <select [(ngModel)]="primerParametro" (ngModelChange)="validCampo(c)" class="form-control" [ngModelOptions]="{standalone: true}">
+                                <option class="form-control" *ngFor="let item of columnsIteracion" [ngValue]="item" [selected]="primerParametro === item">{{item.name}}</option>
+                            </select>
+                        </div>
+                        <label for="x" class="col-2 form-control-label">
+                            <small>Segundo Parámetro</small>
+                        </label>
+                        <div class="col-2">
+                            <select [(ngModel)]="segundoParametro" (ngModelChange)="validCampo(c)" class="form-control" [ngModelOptions]="{standalone: true}">
+                                <option class="form-control" *ngFor="let item of columnsIteracion" [ngValue]="item" [selected]="segundoParametro === item">{{item.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <nb-card>
+                                <nb-card-body>
+                                    <button (click)="clusterizar()" class="btn btn-success btn-sm">
+                                        <i class="nb-play"></i> {{iniciarClust}}
+                                        <small>({{clusterData?.length}})</small>
+                                    </button>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
                 </nb-tab>
             </nb-tabset>
-        </div>
+        </nb-card>
     </div>
 </div>
