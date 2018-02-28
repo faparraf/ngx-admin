@@ -35,21 +35,29 @@ export class AgrupamientoComponent {
   clusterData: any;
 
   myform1 = {
-    clase: 'col-9',
+    tipo_formulario: 'basic',
+    titulo: 'Filtro Iteración',
     alertas: false,
+    modelo: 'filtro1',
     campos: [{
+      claseGrid : 'col-4',
+      requerido: false,
       etiqueta: 'input',
       nombre: 'asset',
       label: 'Asset',
       placeholder: 'Ingrese id de asset',
       tipo: 'text',
     }, {
+      claseGrid : 'col-4',
+      requerido: false,
       etiqueta: 'input',
       nombre: 'id',
       label: 'Iteración',
       placeholder: 'Ingrese id de iteración',
       tipo: 'text',
     }, {
+      claseGrid : 'col-4',
+      requerido: false,
       etiqueta: 'input',
       nombre: 'estado',
       label: 'Estado',
@@ -58,7 +66,8 @@ export class AgrupamientoComponent {
     }],
   };
   myform2 = {
-    clase: 'col-9',
+    tipo_formulario: 'basic',
+    titulo: 'Filtro de Assets',
     alertas: false,
     campos: [],
   };
@@ -89,10 +98,13 @@ export class AgrupamientoComponent {
 
   getFiltro1(event) {
     this.filtro1 = event;
+    console.info(this.filtro1);
   }
 
   getFiltro2(event) {
     this.filtro2 = event;
+    console.info(this.filtro2);
+
   }
 
   filtrar() {
@@ -105,6 +117,7 @@ export class AgrupamientoComponent {
     };
     filtroFinal.filtro_iteracion = this.getToFilter(this.filtro1.data);
     filtroFinal.filtro_asset = this.getToFilter(this.filtro2.data);
+    console.info(filtroFinal);
     this.clustService.getCompose(filtroFinal)
       .subscribe(res => {
         // console.log(filtroFinal);
@@ -146,6 +159,8 @@ export class AgrupamientoComponent {
           this.columns2 = AwsTransformService.getColumnTable(this.settings),
             this.columns1.forEach(element => {
               const e = {
+                claseGrid : 'col-3',
+                requerido: false,
                 etiqueta: 'input',
                 nombre: element.prop,
                 label: element.name,
