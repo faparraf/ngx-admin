@@ -84,7 +84,7 @@ export class AgrupamientoComponent {
       titulo: 'Clusterización',
       btn: 'Clusterizar' + ' (' + this.clusterData.length + ')',
       alertas: true,
-      campos: []
+      campos: [],
     };
   }
 
@@ -195,15 +195,15 @@ export class AgrupamientoComponent {
     const body = {
       metodo: (this.myformclust.campos[2].opciones[event.data.metodo.id]).valor,
       assets: assets,
-      atributos:
-      [this.columnasSelect[event.data.parametro1.id].valor,this.columnasSelect[event.data.parametro2.id].valor],
-      numero_clusters: parseInt(event.data.numero_clusters),
+      atributos: [this.columnasSelect[event.data.parametro1.id].valor,
+                  this.columnasSelect[event.data.parametro2.id].valor],
+      numero_clusters: parseInt(event.data.numero_clusters, 10),
       organization: this.org.Item.id.S,
     };
     console.info(body);
     this.clustService.clusterizar(body)
-    .subscribe(res => {
-      console.log(res);
+      .subscribe(res => {
+        console.info(res);
       });
   }
 
