@@ -32,16 +32,18 @@ export class DinamicformComponent implements OnInit {
     if (!this.normalform.tipo_formulario) {
       this.normalform.tipo_formulario = 'grid';
     }
-    this.normalform.campos = this.normalform.campos.map(d => {
-      d.clase = 'form-control';
-      if (!d.valor) {
-        d.valor = '';
-      }
-      if (!d.deshabilitar) {
-        d.deshabilitar = false;
-      }
-      return d;
-    });
+    if (this.normalform.campos) {
+      this.normalform.campos = this.normalform.campos.map(d => {
+        d.clase = 'form-control';
+        if (!d.valor) {
+          d.valor = '';
+        }
+        if (!d.deshabilitar) {
+          d.deshabilitar = false;
+        }
+        return d;
+      });
+    }
   }
 
   validCampo(c) {
@@ -97,7 +99,7 @@ export class DinamicformComponent implements OnInit {
   clearForm() {
     this.normalform.campos = this.normalform.campos.map(d => {
       if (d.valor.id) {
-        d.valor.Id = 0;
+        d.valor.id = 0;
       } else {
         d.valor = '';
       }
@@ -137,7 +139,7 @@ export class DinamicformComponent implements OnInit {
         }
       }
       if (d.etiqueta === 'radio') {
-        if (d.valor.Id === undefined) {
+        if (d.valor.id === undefined) {
           this.data.valid = false;
           d.clase = 'form-control form-control-danger'
           d.alerta = 'Seleccione el campo'
@@ -163,7 +165,7 @@ export class DinamicformComponent implements OnInit {
       }
 
       if (d.etiqueta === 'select') {
-        if (d.valor.Id === 0) {
+        if (d.valor.id === 0) {
           this.data.valid = false;
           d.clase = 'form-control form-control-danger'
           d.alerta = 'Seleccione el campo'

@@ -24,7 +24,7 @@
               <div *ngFor="let item of c.opciones" class="form-check">
                 <label class="row custom-control custom-radio">
                   <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.Id, c.valor.Id)}}">
+                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}">
                   <span class="custom-control-indicator">
                   </span>
                   <span class="custom-control-description">
@@ -39,7 +39,7 @@
               <div *ngFor="let item of c.opciones" class="form-check">
                 <label class="row custom-control custom-radio">
                   <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.Id, c.valor.Id)}}u">{{isEqual(item.Id, c.valor.Id)}}
+                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
                   <span class="custom-control-indicator">
                   </span>
                   <span class="custom-control-description">
@@ -50,8 +50,8 @@
             </div>
 
             <!-- select -->
-            <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.Id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
-                  <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.Id" [selected]="c.valor.Id === item.Id">
+            <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
+                  <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
                     {{item.valor}}
     
                   </option>
@@ -102,7 +102,7 @@
             <div *ngFor="let item of c.opciones" class="form-check">
               <label class="row custom-control custom-radio">
                 <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.Id, c.valor.Id)}}">
+                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}">
                 <span class="custom-control-indicator">
                 </span>
                 <span class="custom-control-description">
@@ -117,7 +117,7 @@
             <div *ngFor="let item of c.opciones" class="form-check">
               <label class="row custom-control custom-radio">
                 <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.Id, c.valor.Id)}}u">{{isEqual(item.Id, c.valor.Id)}}
+                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
                 <span class="custom-control-indicator">
                 </span>
                 <span class="custom-control-description">
@@ -128,8 +128,8 @@
           </div>
 
           <!-- select -->
-          <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.Id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
-                <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.Id" [selected]="c.valor.Id === item.Id">
+          <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
+                <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
                   {{item.valor}}
   
                 </option>

@@ -9,6 +9,7 @@ import { ClustService } from '../../../@core/data/clust.service';
   styleUrls: ['./agrupamiento.component.scss'],
 })
 export class AgrupamientoComponent {
+  columnasSelect: any[];
   iteraciones: any;
   filtro1: any;
   filtro2: any;
@@ -40,7 +41,7 @@ export class AgrupamientoComponent {
     alertas: false,
     modelo: 'filtro1',
     campos: [{
-      claseGrid : 'col-4',
+      claseGrid: 'col-4',
       requerido: false,
       etiqueta: 'input',
       nombre: 'asset',
@@ -48,7 +49,7 @@ export class AgrupamientoComponent {
       placeholder: 'Ingrese id de asset',
       tipo: 'text',
     }, {
-      claseGrid : 'col-4',
+      claseGrid: 'col-4',
       requerido: false,
       etiqueta: 'input',
       nombre: 'id',
@@ -56,7 +57,7 @@ export class AgrupamientoComponent {
       placeholder: 'Ingrese id de iteración',
       tipo: 'text',
     }, {
-      claseGrid : 'col-4',
+      claseGrid: 'col-4',
       requerido: false,
       etiqueta: 'input',
       nombre: 'estado',
@@ -71,12 +72,20 @@ export class AgrupamientoComponent {
     alertas: false,
     campos: [],
   };
+  myformclust: any;
+
   constructor(private assetsService: AssetsService,
     private clustService: ClustService) {
     this.filtro1 = { data: {} };
     this.filtro2 = { data: {} };
     this.clusterData = [];
-
+    this.myformclust = {
+      tipo_formulario: 'basic',
+      titulo: 'Clusterización',
+      btn: 'Clusterizar' + ' (' + this.clusterData.length + ')',
+      alertas: true,
+      campos: []
+    };
   }
 
   getToFilter(items) {
@@ -124,14 +133,78 @@ export class AgrupamientoComponent {
         const a = JSON.parse(JSON.stringify(res));
         this.iteraciones = JSON.parse(a);
         this.columnsIteracion = AwsTransformService.getColumnsNgxByData(this.iteraciones[0]);
-        // console.log(this.columnsIteracion);
+        let i = 0;
+        this.columnasSelect = [];
+        this.columnasSelect.push({ id: i, valor: 'Seleccione el parámetro ...' });
+        this.columnsIteracion.forEach(element => {
+          i++;
+          this.columnasSelect.push({ id: i, valor: element.name });
+        });
       });
   }
+  construirForm() {
+    this.myformclust.campos = [{
+      claseGrid: 'col-3',
+      clase: 'form-control',
+      etiqueta: 'select',
+      nombre: 'parametro1',
+      label: '* Seleccione parametro 1',
+      requerido: true,
+      valor: { id: 0 },
+      opciones: this.columnasSelect,
+    }, {
+      claseGrid: 'col-3',
+      clase: 'form-control',
+      etiqueta: 'select',
+      nombre: 'parametro2',
+      label: '* Seleccione parametro 2',
+      requerido: true,
+      valor: { id: 0 },
+      opciones: this.columnasSelect,
+    }, {
+      claseGrid: 'col-3',
+      clase: 'form-control',
+      etiqueta: 'select',
+      nombre: 'metodo',
+      label: '* Seleccione parametro 2',
+      requerido: true,
+      valor: { id: 0 },
+      opciones: [
+        { id: 0, valor: 'Seleccione el algoritmo' },
+        { id: 1, valor: 'equal_k-means' },
+      ],
+    }, {
+      claseGrid: 'col-3',
+      clase: 'form-control',
+      etiqueta: 'input',
+      nombre: 'numero_clusters',
+      label: 'Número de clusters',
+      placeholder: 'Cantidad de clusters',
+      requerido: true,
+      tipo: 'number',
+      minimo: 1,
+    }];
+  }
 
-  clusterizar() {
-    // console.log('primer', this.primerParametro);
-    // console.log('segundo', this.segundoParametro);
-    this.iniciarClust = 'Clusterizando ...'
+  clusterizar(event) {
+    console.info(event);
+    const assets = [];
+    this.clusterData.forEach(element => {
+      assets.push(element.asset);
+    });
+    const body = {
+      metodo: (this.myformclust.campos[2].opciones[event.data.metodo.id]).valor,
+      assets: assets,
+      atributos:
+      [this.columnasSelect[event.data.parametro1.id].valor,this.columnasSelect[event.data.parametro2.id].valor],
+      numero_clusters: parseInt(event.data.numero_clusters),
+      organization: this.org.Item.id.S,
+    };
+    console.info(body);
+    this.clustService.clusterizar(body)
+    .subscribe(res => {
+      console.log(res);
+      });
   }
 
   getDataFilter(event) {
@@ -147,6 +220,7 @@ export class AgrupamientoComponent {
       },
       columns: AwsTransformService.getColumnsSmartByData(this.clusterData[0]),
     }
+    this.construirForm();
   }
 
   getOrg(event): void {
@@ -159,7 +233,7 @@ export class AgrupamientoComponent {
           this.columns2 = AwsTransformService.getColumnTable(this.settings),
             this.columns1.forEach(element => {
               const e = {
-                claseGrid : 'col-3',
+                claseGrid: 'col-3',
                 requerido: false,
                 etiqueta: 'input',
                 nombre: element.prop,

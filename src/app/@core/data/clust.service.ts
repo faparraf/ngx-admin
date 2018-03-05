@@ -21,4 +21,9 @@ export class ClustService {
         return this.http.post(Config.LOCAL.ASSET_ITERACION, body, httpOptions);
     }
 
+    clusterizar(element) {
+        const body = JSON.stringify(element);
+        return this.http.post(Config.LOCAL.CLUSTERIZACION, body, httpOptions);
+    }
+
 };

@@ -47,36 +47,11 @@
                         <nb-card-body>
                             <ng2-smart-table [settings]="settingsCluster" [source]="clusterData">
                             </ng2-smart-table>
+                            <br><br>
+                            <ngx-dinamicform [normalform]="myformclust" (result)="clusterizar($event)"></ngx-dinamicform>
+                            <br><br>
                         </nb-card-body>
                     </nb-card>
-                    <div class="row">
-                        <label for="x" class="col-2 form-control-label">
-                            <small>Primer Parámetro</small>
-                        </label>
-                        <div class="col-2">
-                            <select [(ngModel)]="primerParametro" (ngModelChange)="validCampo(c)" class="form-control" [ngModelOptions]="{standalone: true}">
-                                <option class="form-control" *ngFor="let item of columnsIteracion" [ngValue]="item" [selected]="primerParametro === item">{{item.name}}</option>
-                            </select>
-                        </div>
-                        <label for="x" class="col-2 form-control-label">
-                            <small>Segundo Parámetro</small>
-                        </label>
-                        <div class="col-2">
-                            <select [(ngModel)]="segundoParametro" (ngModelChange)="validCampo(c)" class="form-control" [ngModelOptions]="{standalone: true}">
-                                <option class="form-control" *ngFor="let item of columnsIteracion" [ngValue]="item" [selected]="segundoParametro === item">{{item.name}}</option>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <nb-card>
-                                <nb-card-body>
-                                    <button (click)="clusterizar()" class="btn btn-success btn-sm">
-                                        <i class="nb-play"></i> {{iniciarClust}}
-                                        <small>({{clusterData?.length}})</small>
-                                    </button>
-                                </nb-card-body>
-                            </nb-card>
-                        </div>
-                    </div>
                 </nb-tab>
             </nb-tabset>
         </nb-card>
