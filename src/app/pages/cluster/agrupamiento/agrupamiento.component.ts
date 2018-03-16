@@ -126,7 +126,7 @@ export class AgrupamientoComponent {
     };
     filtroFinal.filtro_iteracion = this.getToFilter(this.filtro1.data);
     filtroFinal.filtro_asset = this.getToFilter(this.filtro2.data);
-    console.info(filtroFinal);
+    console.info(JSON.stringify(filtroFinal));
     this.clustService.getCompose(filtroFinal)
       .subscribe(res => {
         // console.log(filtroFinal);
