@@ -3,6 +3,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ClusterRoutingModule, routedComponents } from './cluster-routing.module';
 import { ClustService } from '../../@core/data/clust.service';
+import { OrganizationService } from '../../@core/data/organization.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ClustService } from '../../@core/data/clust.service';
   ],
   providers: [
     ClustService,
+    OrganizationService,
   ],
 })
 

@@ -96,6 +96,31 @@ export class AwsTransformService {
         array = array.substring(0, array.length - 1) + '}';
         return JSON.parse(array);
     }
+    // Array de columnas para ngx dado un objeto
+    static getColumnsNgxByData(element) {
+        const array = [];
+        for (const i in element) {
+            if (element.hasOwnProperty(i)) {
+                const e = { name: i, prop: i };
+                array.push(e);
+            }
+        }
+        return array;
+    }
+
+    // Array de columnas para smartTable dado un objeto
+    static getColumnsSmartByData(element) {
+        let array = '{';
+        for (const i in element) {
+            if (element.hasOwnProperty(i)) {
+                array += '"' + i + '":{"title": "' + i + '"},';
+
+            }
+        }
+        array = array.substring(0, array.length - 1) + '}';
+        // console.log(array);
+        return JSON.parse(array);
+    }
 
     // Array de columnas para ngx-table (assets)
     static getColumnTableNgx(org) {

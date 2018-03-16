@@ -1,7 +1,6 @@
 <div class="row container">
     <div class="col-md-3">
         <br>
-        <ngx-proyectos (getProject)="getOrg($event)"></ngx-proyectos>
         <div class="card">
             <input type='text' class='form-control' placeholder='Filtro de Registros' (keyup)='updateFilter($event)' />
         </div>
@@ -20,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <ol>
-                        <li *ngFor='let col of allColumns'>
+                        <li *ngFor='let col of filterColumns'>
                             <input type='checkbox' [id]="col.name" (click)='toggle(col)' [checked]='isChecked(col)' />
                             <label [attr.for]="col.name">
                                 <small>{{col.name}}</small>

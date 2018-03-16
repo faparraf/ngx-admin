@@ -1,3 +1,61 @@
-<p>
-  agrupamiento works!
-</p>
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+            <nb-tabset>
+                <nb-tab tabTitle="Filtro">
+                    <div class="row justify-content-center">
+                        <div class="col-3">
+                            <br>
+                            <br>
+                            <ngx-proyectos (getProject)="getOrg($event)"></ngx-proyectos>
+                            <div class="row justify-content-center">
+                                <nb-card>
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                                        aria-controls="collapseExample">
+                                        <label [hidden]="!isCollapsed"> Mostrar filtros</label>
+                                        <label [hidden]="isCollapsed"> Ocultar filtros</label>
+                                    </button>
+                                </nb-card>
+                                <br>
+                                <nb-card>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="filtrar()">
+                                        <label> Filtrar </label>
+                                    </button>
+                                </nb-card>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <ngx-dinamicform [normalform]="myform1" (result)="getFiltro1($event)"></ngx-dinamicform>
+                        </div>
+                        <div class="col-12">
+                            <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                                <nb-card>
+                                    <div class="card-body">
+                                        <ngx-dinamicform [normalform]="myform2" (result)="getFiltro2($event)"></ngx-dinamicform>
+                                    </div>
+                                </nb-card>
+                            </div>
+                        </div>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Selección de Iteraciones">
+                    <ngx-datafilter (selectedData)="getDataFilter($event)" [filterColumns]="columnsIteracion" [columns]="columnsIteracion" [rows]="iteraciones"
+                        [temp]="iteraciones"></ngx-datafilter>
+                </nb-tab>
+                <nb-tab tabTitle="Clusterización">
+                    <nb-card>
+                        <nb-card-body>
+                            <ng2-smart-table [settings]="settingsCluster" [source]="clusterData">
+                            </ng2-smart-table>
+                            <br>
+                            <br>
+                            <ngx-dinamicform [normalform]="myformclust" (result)="clusterizar($event)"></ngx-dinamicform>
+                            <br>
+                            <br>
+                        </nb-card-body>
+                    </nb-card>
+                </nb-tab>
+            </nb-tabset>
+        </nb-card>
+    </div>
+</div>

@@ -6,27 +6,24 @@ const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
-const path =  Config.PROD.BASEPATH;
-
-
 @Injectable()
 export class ClustService {
 
-    constructor(private http:HttpClient) {
+    constructor(private http: HttpClient) {
+        if (window.sessionStorage.getItem('id_token') !== null ||
+            window.sessionStorage.getItem('id_token') !== undefined) {
+            httpOptions.headers.append('Authorization', window.sessionStorage.getItem('id_token'));
+        }
     }
 
-    get(endpoint) {
-        return this.http.get(path + endpoint);
-    }
-    post(endpoint, element) {
+    getCompose(element) {
         const body = JSON.stringify(element);
-        return this.http.post(path + endpoint, body, httpOptions);
+        return this.http.post(Config.LOCAL.ASSET_ITERACION, body, httpOptions);
     }
-    put(endpoint, element) {
+
+    clusterizar(element) {
         const body = JSON.stringify(element);
-        return this.http.put(path + endpoint + element.id, body, httpOptions);
+        return this.http.post(Config.LOCAL.CLUSTERIZACION, body, httpOptions);
     }
-    delete(endpoint, element) {
-        return this.http.delete(path + endpoint + element.id);
-    }
+
 };
