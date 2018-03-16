@@ -59,7 +59,6 @@ export class DinamicformComponent implements OnInit, OnChanges {
 
   onChange(event, c) {
     c.valor = event.srcElement.files[0];
-    console.log(c.valor);
     this.validCampo(c);
   }
 
@@ -90,7 +89,7 @@ export class DinamicformComponent implements OnInit, OnChanges {
   }
 
   validCampo(c) {
-    console.info(c);
+    // console.info(c);
     if (c.entrelazado) {
       this.interlaced.emit(c);
     }
@@ -113,7 +112,7 @@ export class DinamicformComponent implements OnInit, OnChanges {
     if (c.etiqueta === 'file') {
       if (c.valor !== undefined) {
         if (c.valor.size > c.tamanoMaximo * 1024000) {
-          console.info(c);
+          // console.info(c);
           c.clase = 'form-control form-control-danger';
           c.alerta = 'El tamaño del archivo es superior a : ' + c.tamanoMaximo + 'MB. ';
         } else {
@@ -209,7 +208,7 @@ export class DinamicformComponent implements OnInit, OnChanges {
           }
         } else {
           if (d.relacion === undefined || d.relacion) {
-            console.info(result);
+            // console.info(result);
             result += '"' + d.nombre + '":' + JSON.stringify(d.valor) + ',';
           } else {
             result += '"' + d.nombre + '":' + JSON.stringify(d.valor.id) + ',';
