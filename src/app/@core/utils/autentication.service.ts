@@ -6,11 +6,12 @@ import { Md5 } from 'ts-md5/dist/md5';
 
 @Injectable()
 export class AutenticationService {
+
     private params: any;
     public session = null;
     private setting_basic: any;
     public payload: any;
-    public logOut: any;
+    public logOutUrl: any;
 
     constructor(private http: HttpClient) {
         this.setting_basic = {
@@ -21,8 +22,8 @@ export class AutenticationService {
                 'cache-control': 'no-cache',
             }),
         };
-        this.logOut = '';
-        this.payload = {username:''};
+        this.logOutUrl = '';
+        this.payload = { username: '' };
         this.timer();
     }
 
@@ -32,7 +33,16 @@ export class AutenticationService {
     }
 
     public getLogoutUrl() {
-        return this.logOut;
+
+    }
+
+    getPayload(): any {
+        if (this.live()) {
+            const id_token = window.sessionStorage.getItem('id_token').split('.');
+            return JSON.parse(atob(id_token[1]));
+        } else {
+            return false;
+        }
     }
 
     public getToken() {
@@ -82,11 +92,21 @@ export class AutenticationService {
         } else {
             const id_token = window.sessionStorage.getItem('id_token').split('.');
             this.payload = JSON.parse(atob(id_token[1]));
-            this.logOut = Config.LOCAL.TOKEN.SIGN_OUT_URL;
-            this.logOut += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
-            this.logOut += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
+            this.logOutUrl = Config.LOCAL.TOKEN.SIGN_OUT_URL;
+            this.logOutUrl += '?client_id=' + Config.LOCAL.TOKEN.CLIENTE_ID;
+            this.logOutUrl += '&logout_uri=' + Config.LOCAL.TOKEN.SIGN_OUT_REDIRECT_URL;
         }
     }
+
+    public logout() {
+        location.href = this.logOutUrl;
+        sessionStorage.clear();
+    }
+
+    public login() {
+        location.href = this.getAuthorizationUrl();
+    }
+
     public live() {
         if (window.sessionStorage.getItem('id_token') !== null) {
             return true;

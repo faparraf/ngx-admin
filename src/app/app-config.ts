@@ -25,7 +25,7 @@ export const Config = {
             RESPONSE_TYPE: 'code',
             SCOPE: 'openid+profile+email+aws.cognito.signin.user.admin',
             BUTTON_CLASS: 'btn btn-warning btn-sm',
-            SIGN_OUT_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oidc/logout',
+            SIGN_OUT_URL: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/logout',
             SIGN_OUT_REDIRECT_URL: 'https://clust.dijkstra-ing.com/',
             REFRESH_TOKEN: 'https://clustuserpool.auth.us-east-1.amazoncognito.com/oauth2/token',
         },

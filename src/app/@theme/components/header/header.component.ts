@@ -12,9 +12,8 @@ import { AutenticationService } from '../../../@core/utils/autentication.service
 })
 export class HeaderComponent implements OnInit {
 
+  username: any;
   @Input() position = 'normal';
-
-  user: any;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -28,15 +27,18 @@ export class HeaderComponent implements OnInit {
   }
 
   liveToken() {
+      if (this.autenticacion.live()) {
+        this.username = (this.autenticacion.getPayload()).name;
+      }
       return this.autenticacion.live();
   }
 
   login() {
-    location.href = this.autenticacion.getAuthorizationUrl();
+    this.autenticacion.getAuthorizationUrl();
   }
 
   logout() {
-    location.href = this.autenticacion.getLogoutUrl();
+    this.autenticacion.logout();
   }
 
   toggleSidebar(): boolean {
