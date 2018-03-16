@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    this.autenticacion.getAuthorizationUrl();
+    this.autenticacion.login();
   }
 
   logout() {
