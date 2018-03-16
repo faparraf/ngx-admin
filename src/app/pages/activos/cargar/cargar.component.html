@@ -1,18 +1,6 @@
 <div class="row">
   <div class="col-6">
-    <nb-card>
-      <nb-card-header>
-        Subir listado de activos
-      </nb-card-header>
-      <nb-card-body>
-        <div class="form-group row ">
-          <label for="file" class="col-sm-3 form-control-label ">Seleccione el archivo</label>
-          <div class="col-sm-8">
-            <input type="file" (change)="fileEvent($event)" id="file" class="form-control">
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
+    <ngx-dinamicform [normalform]="documento" (result)="subirActivo($event)"></ngx-dinamicform>
   </div>
   <div>
   </div>

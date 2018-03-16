@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'ngx-dinamicform',
@@ -7,13 +8,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 
 
-export class DinamicformComponent implements OnInit {
+export class DinamicformComponent implements OnInit, OnChanges {
 
   @Input('normalform') normalform: any;
+  @Input('modeloData') modeloData: any;
   @Output('result') result: EventEmitter<any> = new EventEmitter();
   @Output('resultSmart') resultSmart: EventEmitter<any> = new EventEmitter();
+  @Output('interlaced') interlaced: EventEmitter<any> = new EventEmitter();
   data: any;
-
+  @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
   constructor() {
     this.data = {
       valid: true,
@@ -23,30 +26,74 @@ export class DinamicformComponent implements OnInit {
     };
   }
 
+  ngOnChanges(changes) {
+    if (changes.normalform !== undefined) {
+      if (changes.normalform.currentValue !== undefined) {
+        this.normalform = changes.normalform.currentValue;
+      }
+    }
+    if (changes.modeloData !== undefined) {
+      if (changes.modeloData.currentValue !== undefined) {
+        this.modeloData = changes.modeloData.currentValue;
+        if (this.normalform.campos) {
+          this.normalform.campos.forEach(element => {
+            for (const i in this.modeloData) {
+              if (this.modeloData.hasOwnProperty(i)) {
+                if (i === element.nombre) {
+                  if (element.etiqueta === 'input' && element.tipo === 'date') {
+                    element.valor = (new Date(this.modeloData[i])).toISOString().substring(0, 10);
+                  } else {
+                    element.valor = this.modeloData[i];
+                  }
+                  if (element.etiqueta === 'mat-date') {
+                    element.valor = new Date(this.modeloData[i]);
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    }
+  }
+
   onChange(event, c) {
     c.valor = event.srcElement.files[0];
+    console.log(c.valor);
     this.validCampo(c);
   }
 
   ngOnInit() {
+
     if (!this.normalform.tipo_formulario) {
       this.normalform.tipo_formulario = 'grid';
     }
-    if (this.normalform.campos) {
-      this.normalform.campos = this.normalform.campos.map(d => {
-        d.clase = 'form-control';
-        if (!d.valor) {
-          d.valor = '';
-        }
-        if (!d.deshabilitar) {
-          d.deshabilitar = false;
-        }
-        return d;
-      });
-    }
+
+    this.normalform.campos = this.normalform.campos.map(d => {
+      d.clase = 'form-control';
+      if (d.relacion === undefined) {
+        d.relacion = true;
+      }
+      if (!d.valor) {
+        d.valor = '';
+      }
+      if (!d.deshabilitar) {
+        d.deshabilitar = false;
+      }
+      return d;
+    });
+  }
+
+  onChangeDate(event, c) {
+    c.valor = event.value;
+    // console.info('c', c);
   }
 
   validCampo(c) {
+    console.info(c);
+    if (c.entrelazado) {
+      this.interlaced.emit(c);
+    }
     if (c.valor === '') {
       c.clase = 'form-control form-control-danger'
     } else {
@@ -156,7 +203,18 @@ export class DinamicformComponent implements OnInit {
         if (d.requerido) {
           resueltos++;
         }
-        result += '"' + d.nombre + '":' + JSON.stringify(d.valor) + ',';
+        if (d.etiqueta === 'input' && d.tipo === 'date') {
+          if (d.valor !== undefined) {
+            result += '"' + d.nombre + '":' + JSON.stringify(new Date(d.valor)) + ',';
+          }
+        } else {
+          if (d.relacion === undefined || d.relacion) {
+            console.info(result);
+            result += '"' + d.nombre + '":' + JSON.stringify(d.valor) + ',';
+          } else {
+            result += '"' + d.nombre + '":' + JSON.stringify(d.valor.id) + ',';
+          }
+        }
       } else if (d.valor !== {} && d.etiqueta === 'file') {
         if (d.requerido) {
           resueltos++;
@@ -176,14 +234,17 @@ export class DinamicformComponent implements OnInit {
       }
 
     });
-    if (this.data.valid || (resueltos / requeridos) === 1) {
-      if (this.normalform.modelo) {
-        result = result.substring(0, result.length - 1) + '}}';
-      } else {
-        result = result.substring(0, result.length - 1) + '}';
+    if (this.normalform.campos.length > this.data.files.length || this.data.files === []) {
+      if (this.data.valid) {
+        if (this.normalform.modelo) {
+          result = result.substring(0, result.length - 1) + '}}';
+        } else {
+          result = result.substring(0, result.length - 1) + '}';
+        }
+        this.data.data = JSON.parse(result);
       }
-      this.data.data = JSON.parse(result);
     }
+
     this.data.percentage = (resueltos / requeridos);
     this.result.emit(this.data);
     return this.data;
