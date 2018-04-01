@@ -5,6 +5,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutenticationService } from '../@core/utils/autentication.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
+const MAT_MODULES = [
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatFormFieldModule,
+  MatInputModule,
+]
+
 import {
   NbActionsModule,
   NbCardModule,
@@ -91,7 +104,7 @@ const NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES, NgxDatatableModule],
+  imports: [...BASE_MODULES, ...NB_MODULES, NgxDatatableModule, ...MAT_MODULES],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES],
   declarations: [...COMPONENTS, ...PIPES],
 })

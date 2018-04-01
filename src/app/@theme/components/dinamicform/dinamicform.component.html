@@ -1,19 +1,26 @@
-<div [ngSwitch]="normalform.tipo_formulario">
+<div class="dinamic-form" [ngSwitch]="normalform.tipo_formulario">
+
+  <!-- Form  basic -->
   <form class="form-horizontal" *ngSwitchCase="'basic'">
     <fieldset>
-      <legend align="{{normalform.alineacion_titulo}}"><small>{{normalform.titulo}}</small></legend>
+      <legend align="{{normalform.alineacion_titulo}}">
+        <small>{{normalform.titulo}}</small>
+      </legend>
       <div class="row">
         <div *ngFor="let c of normalform.campos" class="{{c.claseGrid}}" [ngSwitch]="c.etiqueta">
           <div class="form-group">
-            <label for="{{c.nombre}}" class="form-control-label"><small>{{c.label}}</small>
+            <label for="{{c.nombre}}" class="form-control-label">
+              <small>{{c.label}}</small>
               <small id="{{c.nombre}}" class="text-muted" [hidden]="!normalform.alertas">
-                  {{c.alerta}}
-                </small>
-            </label>
+                {{c.alerta}}
+              </small>
+            </label><br>
+
             <!-- input -->
             <input *ngSwitchCase="'input'" [(ngModel)]="c.valor" (ngModelChange)="validCampo(c)" [ngModelOptions]="{standalone: true}"
               type="{{c.tipo}}" id="{{c.nombre}}" class="{{c.clase}}" placeholder="{{c.placeholder}}" [disabled]="c.deshabilitar"
             />
+
             <!-- textarea -->
             <textarea *ngSwitchCase="'textarea'" [(ngModel)]="c.valor" (ngModelChange)="validCampo(c)" [ngModelOptions]="{standalone: true}"
               type="text" id="{{c.nombre}}" class="{{c.clase}}" placeholder="{{c.placeholder}}">
@@ -23,12 +30,12 @@
             <div *ngSwitchCase="'radio'">
               <div *ngFor="let item of c.opciones" class="form-check">
                 <label class="row custom-control custom-radio">
-                  <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}">
+                  <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                    checked="{{isEqual(item.id, c.valor.id)}}">
                   <span class="custom-control-indicator">
                   </span>
                   <span class="custom-control-description">
-                      {{item.valor}}
+                    {{item.valor}}
                   </span>
                 </label>
               </div>
@@ -38,51 +45,62 @@
             <div *ngSwitchCase="'checkbox'">
               <div *ngFor="let item of c.opciones" class="form-check">
                 <label class="row custom-control custom-radio">
-                  <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                  [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
+                  <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                    checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
                   <span class="custom-control-indicator">
                   </span>
                   <span class="custom-control-description">
-                      {{item.valor}}
+                    {{item.valor}}
                   </span>
                 </label>
               </div>
             </div>
 
+            <!-- date material -->
+
+            <mat-form-field *ngSwitchCase="'mat-date'">
+              <input matInput  [(ngModel)]="c.valor" [matDatepicker]="picker" (dateChange)="onChangeDate($event,c)" [ngModelOptions]="{standalone: true}">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
             <!-- select -->
             <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
-                  <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
-                    {{item.valor}}
-    
-                  </option>
-              </select>
+              <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
+                {{item.valor}}
+              </option>
+            </select>
 
             <!-- input-file -->
-            <!-- <input-file *ngSwitchCase="'input-file'" [(model)]="c.valor" ></input-file> -->
-            <!-- <ngx-input-file-upload *ngSwitchCase="'input-file'" [acceptHtml]="acceptHtml" [(ngModel)]="c.valor" (ngModelChange)="change()" [acceptTs]="acceptTs" [activeColor]="activeColor">
-            </ngx-input-file-upload> -->
             <input type="file" name="{{c.nombre}}" class="{{c.clase}}" *ngSwitchCase="'file'" (change)="onChange($event,c)" />
           </div>
         </div>
       </div>
     </fieldset>
     <br>
+    <!-- Botones de form con acción de botones -->
     <div align="center">
-      <button class="btn btn-primary btn-tiny" (click)="clearForm()" [hidden]="!normalform.btnLimpiar">{{normalform.btnLimpiar}}</button>
       <button class="btn btn-success btn-tiny" (click)="validForm()" [hidden]="!normalform.btn">{{normalform.btn}}</button>
+      <button class="btn btn-primary btn-tiny" (click)="clearForm()" [hidden]="!normalform.btnLimpiar">{{normalform.btnLimpiar}}</button>
+
     </div>
     <br>
   </form>
+  <!-- End Form basic -->
 
-
+  <!-- Form grid -->
   <form class="form-horizontal" *ngSwitchCase="'grid'">
     <fieldset>
-      <legend align="{{normalform.alineacion_titulo}}"><small>{{normalform.titulo}}</small></legend>
+      <legend align="{{normalform.alineacion_titulo}}">
+        <small>{{normalform.titulo}}</small>
+      </legend>
       <div class="form-group row" *ngFor="let c of normalform.campos" [ngSwitch]="c.etiqueta">
-        <label for="{{c.nombre}}" class="col-sm-3 form-control-label"><small>{{c.label}}</small><br>
+        <label for="{{c.nombre}}" class="col-sm-3 form-control-label">
+          <small>{{c.label}}</small>
+          <br>
           <small id="{{c.nombre}}" class="text-muted" [hidden]="!normalform.alertas">
-              {{c.alerta}}
-            </small>
+            {{c.alerta}}
+          </small>
         </label>
 
         <div class="{{normalform.clase}}">
@@ -101,12 +119,12 @@
           <div *ngSwitchCase="'radio'">
             <div *ngFor="let item of c.opciones" class="form-check">
               <label class="row custom-control custom-radio">
-                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}">
+                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                  checked="{{isEqual(item.id, c.valor.id)}}">
                 <span class="custom-control-indicator">
                 </span>
                 <span class="custom-control-description">
-                    {{item.valor}}
+                  {{item.valor}}
                 </span>
               </label>
             </div>
@@ -116,29 +134,34 @@
           <div *ngSwitchCase="'checkbox'">
             <div *ngFor="let item of c.opciones" class="form-check">
               <label class="row custom-control custom-radio">
-                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" 
-                [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}" checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
+                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                  checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
                 <span class="custom-control-indicator">
                 </span>
                 <span class="custom-control-description">
-                    {{item.valor}}
+                  {{item.valor}}
                 </span>
               </label>
             </div>
           </div>
 
+
+          <!-- date material -->
+          <mat-form-field *ngSwitchCase="'mat-date'">
+            <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event,c)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
           <!-- select -->
           <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
-                <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
-                  {{item.valor}}
-  
-                </option>
-            </select>
+            <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
+              {{item.valor}}
+
+            </option>
+          </select>
 
           <!-- input-file -->
-          <!-- <input-file *ngSwitchCase="'input-file'" [(model)]="c.valor" ></input-file> -->
-          <!-- <ngx-input-file-upload *ngSwitchCase="'input-file'" [acceptHtml]="acceptHtml" [(ngModel)]="c.valor" (ngModelChange)="change()" [acceptTs]="acceptTs" [activeColor]="activeColor">
-          </ngx-input-file-upload> -->
           <input type="file" name="{{c.nombre}}" class="{{c.clase}}" *ngSwitchCase="'file'" (change)="onChange($event,c)" />
 
         </div>
@@ -146,10 +169,92 @@
     </fieldset>
     <br>
     <div align="center">
-      <button class="btn btn-primary btn-tiny" (click)="clearForm()" [hidden]="!normalform.btnLimpiar">{{normalform.btnLimpiar}}</button>
       <button class="btn btn-success btn-tiny" (click)="validForm()" [hidden]="!normalform.btn">{{normalform.btn}}</button>
+      <button class="btn btn-primary btn-tiny" (click)="clearForm()" [hidden]="!normalform.btnLimpiar">{{normalform.btnLimpiar}}</button>
     </div>
     <br>
   </form>
+  <!-- End Form Grid -->
 
-  </div>
+  <!-- Form simple -->
+  <form class="form-horizontal" *ngSwitchCase="'simple'">
+    <div class="row">
+      <div *ngFor="let c of normalform.campos" class="{{c.claseGrid}}" [ngSwitch]="c.etiqueta">
+        <div class="form-group">
+          <label for="{{c.nombre}}" class="form-control-label">
+            <small>{{c.label}}</small>
+            <small id="{{c.nombre}}" class="text-muted" [hidden]="!normalform.alertas">
+              {{c.alerta}}
+            </small>
+          </label>
+
+          <!-- input -->
+          <input *ngSwitchCase="'input'" [(ngModel)]="c.valor" (ngModelChange)="validCampo(c)" [ngModelOptions]="{standalone: true}"
+            type="{{c.tipo}}" id="{{c.nombre}}" class="{{c.clase}}" placeholder="{{c.placeholder}}" [disabled]="c.deshabilitar"
+          />
+
+          <!-- textarea -->
+          <textarea *ngSwitchCase="'textarea'" [(ngModel)]="c.valor" (ngModelChange)="validCampo(c)" [ngModelOptions]="{standalone: true}"
+            type="text" id="{{c.nombre}}" class="{{c.clase}}" placeholder="{{c.placeholder}}">
+                </textarea>
+
+          <!-- radio -->
+          <div *ngSwitchCase="'radio'">
+            <div *ngFor="let item of c.opciones" class="form-check">
+              <label class="row custom-control custom-radio">
+                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                  checked="{{isEqual(item.id, c.valor.id)}}">
+                <span class="custom-control-indicator">
+                </span>
+                <span class="custom-control-description">
+                  {{item.valor}}
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- checkbox -->
+          <div *ngSwitchCase="'checkbox'">
+            <div *ngFor="let item of c.opciones" class="form-check">
+              <label class="row custom-control custom-radio">
+                <input type="radio" checked class="custom-control-input" name="{{c.nombre}}" [value]="item" [(ngModel)]="c.valor" [ngModelOptions]="{standalone: true}"
+                  checked="{{isEqual(item.id, c.valor.id)}}u">{{isEqual(item.id, c.valor.id)}}
+                <span class="custom-control-indicator">
+                </span>
+                <span class="custom-control-description">
+                  {{item.valor}}
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- date material -->
+
+          <mat-form-field *ngSwitchCase="'mat-date'">
+            <input matInput [matDatepicker]="picker" (dateChange)="onChangeDate($event,c)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- select -->
+          <select *ngSwitchCase="'select'" [(ngModel)]="c.valor.id" (ngModelChange)="validCampo(c)" class="{{c.clase}}" [ngModelOptions]="{standalone: true}">
+            <option class="{{c.clase}}" *ngFor="let item of c.opciones" [ngValue]="item.id" [selected]="c.valor.id === item.id">
+              {{item.valor}}
+
+            </option>
+          </select>
+
+          <!-- input-file -->
+          <input type="file" name="{{c.nombre}}" class="{{c.clase}}" *ngSwitchCase="'file'" (change)="onChange($event,c)" />
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- Botones de form con acción de botones -->
+    <div align="center">
+      <button class="btn btn-success btn-tiny" (click)="validForm()" [hidden]="!normalform.btn">{{normalform.btn}}</button>
+      <button class="btn btn-primary btn-tiny" (click)="clearForm()" [hidden]="!normalform.btnLimpiar">{{normalform.btnLimpiar}}</button>
+    </div>
+    <br>
+  </form>
+</div>
