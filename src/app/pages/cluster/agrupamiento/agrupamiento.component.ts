@@ -200,8 +200,8 @@ export class AgrupamientoComponent {
       numero_clusters: parseInt(event.data.numero_clusters, 10),
       organization: this.org.Item.id.S,
     };
-    console.info(body);
-    this.clustService.clusterizar(body)
+    console.info(JSON.stringify(body));
+    this.clustService.clusterizar(JSON.stringify(body))
       .subscribe(res => {
         console.info(res);
       });
