@@ -8,6 +8,6 @@ import { ApoloComponent } from './../../@core/data/apolo.service';
 })
 export class DashboardComponent {
   constructor(private apolo: ApoloComponent) {
-    console.info(apolo);
+    console.info(this.apolo);
   }
 }
