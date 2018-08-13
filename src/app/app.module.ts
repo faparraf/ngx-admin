@@ -16,6 +16,10 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
+import {ApolloModule} from 'apollo-angular';
+import {HttpLinkModule} from 'apollo-angular-link-http';
+
+
 
 
 @NgModule({
@@ -27,6 +31,8 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
     AppRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
+    ApolloModule,
+    HttpLinkModule,
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),

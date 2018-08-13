@@ -12,6 +12,8 @@ export const Config = {
         CLUSTERIZACION: BASEPATH + 'cluster',
     },
     LOCAL: {
+        GRAPHQL:'https://ukx5ybfbxnfcni3mfaociyy3je.appsync-api.us-east-1.amazonaws.com/graphql',
+        KEY:'da2-ciau7bbyundm3okwhuldg3tzvi',
         BASEPATH: BASEPATH,
         ORGANIZATION: BASEPATH + 'organization/',
         ASSET_ITERACION: BASEPATH + 'iteration/getmerge',
