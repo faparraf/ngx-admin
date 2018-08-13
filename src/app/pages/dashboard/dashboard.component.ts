@@ -7,7 +7,7 @@ import { ApoloComponent } from './../../@core/data/apolo.service';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  constructor(private assetsService: ApoloComponent){
-
+  constructor(private apolo: ApoloComponent) {
+    console.info(apolo);
   }
 }
