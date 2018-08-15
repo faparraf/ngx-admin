@@ -8,10 +8,11 @@ export class ProcesoService {
     public procesos: Observable<any[]>;
 
     constructor(private db: AngularFireDatabase) {
-        this.procesos = db.list('asistencia').valueChanges();
+
     }
 
     public getProcesos(): Observable<any[]> {
+        this.procesos = this.db.list('asistencia').valueChanges();
         return this.procesos;
     }
 
