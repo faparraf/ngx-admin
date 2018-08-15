@@ -6,6 +6,7 @@ import { ClustService } from '../../@core/data/clust.service';
 import { AwsTransformService } from '../../@core/utils/awsTransform.service';
 import { OrganizationService } from '../../@core/data/organization.service';
 import { AssetsService } from '../../@core/data/assets.service';
+import { ProcesoService } from '../../@core/data/proceso.service';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AssetsService } from '../../@core/data/assets.service';
     ClustService,
     AwsTransformService,
     OrganizationService,
+    ProcesoService,
   ],
 })
 export class ConfiguracionModule { }

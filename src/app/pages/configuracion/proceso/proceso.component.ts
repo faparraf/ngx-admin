@@ -3,6 +3,8 @@ import * as Vis from 'vis';
 import { UUID } from 'angular2-uuid';
 import { AwsTransformService } from '../../../@core/utils/awsTransform.service';
 import { OrganizationService } from '../../../@core/data/organization.service';
+import { ProcesoService } from '../../../@core/data/proceso.service';
+
 
 @Component({
   selector: 'ngx-proceso',
@@ -20,6 +22,7 @@ export class ProcesoComponent implements OnInit {
   public descripcion: any;
   public desde = { options: '' };
   public hasta = { options: '' };
+  public procesos: any;
 
   existEdge(from, to) {
     let exist = false;
@@ -41,7 +44,8 @@ export class ProcesoComponent implements OnInit {
     return exist;
   }
 
-  constructor(private orgService: OrganizationService) {
+  constructor(private orgService: OrganizationService,
+    private procesoService: ProcesoService) {
     this.estado = '';
     this.descripcion = '';
   }
@@ -122,6 +126,10 @@ export class ProcesoComponent implements OnInit {
 
   ngOnInit() {
     this.clear();
+    this.procesoService.getProcesos()
+      .subscribe(res => {
+        console.info(res);
+      })
   };
 
   clear() {
